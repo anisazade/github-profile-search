@@ -2,15 +2,6 @@ import { useState } from 'react';
 // import { use } from 'react';
 import './App.css';
 
-function SerachBar() {
-    return (
-        <>
-            <button id="search-button">search</button>
-            <input type="Search repo, or a GitHub profile" id="search-input" />
-        </>
-    );
-}
-
 function UserInformation({ user }) {
     return (
         <div>
@@ -54,16 +45,29 @@ function Repository({ repository }) {
     );
 }
 
-function Header() {
+function Header({ onSearch }) {
+    const [searchTerm, setSearchTerm] = useState('');
+
     return (
         <div>
-            <SerachBar />
+            <button id="search-button" onClick={() => onSearch(searchTerm)}>
+                search
+            </button>
+            <input
+                type="text"
+                placeholder="Search a GitHub profile"
+                id="search-input"
+                value={searchTerm}
+                onChange={function (event) {
+                    setSearchTerm(event.target.value);
+                }}
+            />
         </div>
     );
 }
 
 function Profile({ data }) {
-    if(data){
+    if (data) {
         return (
             <div id="profile-container">
                 <UserInformation user={data.user} />
@@ -76,14 +80,18 @@ function Profile({ data }) {
 
 function App() {
     const [profile, setProfile] = useState(null);
-    function fetch_data() {
-        getProfile('lukastaegert').then(setProfile);
+    function handleSearch(username) {
+        getProfile(username).then(setProfile);
     }
     return (
         <>
-            <Header />
+            <Header onSearch={handleSearch} />
             <Profile data={profile} />
-            {(!profile) && <button onClick={fetch_data}>fecth a profile</button>}
+            {!profile && (
+                <div>
+                    <p>Search for an exisitng GitHub user</p>
+                </div>
+            )}
         </>
     );
 }
@@ -99,7 +107,7 @@ async function getProfile(username) {
         .then((response) => (response.ok ? response.json() : null))
         .catch(console.error);
 
-    if (!userJson) return {};
+    if (!userJson) return null;
 
     const reposJson = await fetch(URL.parse(userJson.repos_url)).then((data) => data.json());
     const user = {
