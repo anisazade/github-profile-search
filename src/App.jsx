@@ -49,27 +49,37 @@ function Header({ onSearch }) {
     const [searchTerm, setSearchTerm] = useState('');
 
     return (
-        <div>
-            <button id="search-button" onClick={() => onSearch(searchTerm)}>
-                search
-            </button>
-            <input
-                type="text"
-                placeholder="Search a GitHub profile"
-                id="search-input"
-                value={searchTerm}
-                onChange={function (event) {
-                    setSearchTerm(event.target.value);
-                }}
-            />
-        </div>
+        <header className="header">
+            <div className="logo-box">
+                <img src="./src/assets/github-mark.svg" alt="Github-Logo" className="logo-img" />
+            </div>
+            <div className="search-box">
+                <button className="search-button" onClick={() => onSearch(searchTerm)}>
+                    <img
+                        className="search-icon"
+                        src="./src/assets/magnifying-glass-search-svgrepo-com.svg"
+                        alt="search-icon"
+                    />
+                </button>
+                <input
+                    type="text"
+                    placeholder="Search"
+                    id="search-input"
+                    value={searchTerm}
+                    onChange={function (event) {
+                        setSearchTerm(event.target.value);
+                    }}
+                />
+            </div>
+            <p className="search-sub">Search for an exisitng GitHub user</p>
+        </header>
     );
 }
 
 function Profile({ data }) {
     if (data) {
         return (
-            <div id="profile-container">
+            <div id="profile-box">
                 <UserInformation user={data.user} />
                 <RepositoryGrid repository_list={data.repos} />
                 <a href="">View all rpositories</a>
@@ -87,11 +97,6 @@ function App() {
         <>
             <Header onSearch={handleSearch} />
             <Profile data={profile} />
-            {!profile && (
-                <div>
-                    <p>Search for an exisitng GitHub user</p>
-                </div>
-            )}
         </>
     );
 }
