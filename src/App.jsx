@@ -45,33 +45,32 @@ function Repository({ repository }) {
     );
 }
 
-function Header({ onSearch }) {
+function Header({ onSearch , secClass}) {
     const [searchTerm, setSearchTerm] = useState('');
 
     return (
         <header className="header">
-            <div className="logo-box">
-                <img src="./src/assets/github-mark.svg" alt="Github-Logo" className="logo-img" />
-            </div>
-            <div className="search-box">
-                <button className="search-button" onClick={() => onSearch(searchTerm)}>
-                    <img
-                        className="search-icon"
-                        src="./src/assets/magnifying-glass-search-svgrepo-com.svg"
-                        alt="search-icon"
+            <div className={"header-box"+secClass}>
+                <div className="search-box">
+                    <button className="search-button" onClick={() => onSearch(searchTerm)}>
+                        <img
+                            className="search-icon"
+                            src="./src/assets/magnifying-glass-search-svgrepo-com.svg"
+                            alt="search-icon"
+                        />
+                    </button>
+                    <input
+                        type="text"
+                        placeholder="Search"
+                        id="search-input"
+                        value={searchTerm}
+                        onChange={function (event) {
+                            setSearchTerm(event.target.value);
+                        }}
                     />
-                </button>
-                <input
-                    type="text"
-                    placeholder="Search"
-                    id="search-input"
-                    value={searchTerm}
-                    onChange={function (event) {
-                        setSearchTerm(event.target.value);
-                    }}
-                />
+                </div>
+                <p className="search-sub">Search for an exisitng GitHub user</p>
             </div>
-            <p className="search-sub">Search for an exisitng GitHub user</p>
         </header>
     );
 }
@@ -95,7 +94,7 @@ function App() {
     }
     return (
         <>
-            <Header onSearch={handleSearch} />
+            <Header onSearch={handleSearch} secClass={profile!== null?" shrink":""} />
             <Profile data={profile} />
         </>
     );

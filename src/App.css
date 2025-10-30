@@ -4,14 +4,26 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background-image: url(./assets/space-purple.jpg);
+    background-image: url(./assets/galaxy.jpg);
     background-position: center;
     background-size: cover;
-    padding-bottom: 50px;
+    position: absolute;
+    top: 0;
+    right:0;
+    left: 0;
+    z-index: -1;
 }
 
-.logo-img{
-    height: 70px;
+.header-box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.header-box.shrink{
+    transform: translateY(-36vh);
+    transition: all 1s;
 }
 
 .search-icon{
@@ -25,11 +37,15 @@
     overflow: hidden;
     height: 40px;
     margin: 10px;
-    border: 2px solid transparent;
-    transition: 0.8s;
+    border: 2px solid rgb(70, 70, 90);
+    transition: box-shadow 0.5s ease-out, border-color 0.4s ease-out;
 }
 
 .search-box:hover{
+    box-shadow: 8px 8px 20px rgba(234, 206, 253,0.5);
+}
+
+.search-box:active, .search-box:focus-within{
     border-color: rgb(234, 206, 253);
 }
 
@@ -53,4 +69,20 @@
 
 .search-sub{
     font-size: 12px;
+}
+
+#profile-box{
+    min-height: 74vh;
+    margin-top: 26vh;
+    transform: translateY(74vh);
+    background-color: rgb(82, 70, 90);
+    animation: slideUp 1s ease-out;
+    animation-fill-mode: forwards;
+    z-index: 100;
+}
+
+@keyframes slideUp{
+    100%{
+        transform: translateY(0);
+    }
 }
