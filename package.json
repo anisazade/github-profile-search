@@ -7,7 +7,8 @@
         "dev": "vite",
         "build": "vite build",
         "lint": "eslint .",
-        "preview": "vite preview"
+        "preview": "vite preview",
+        "sasscmp": "sass --watch src/sass/app.scss src/App.css"
     },
     "dependencies": {
         "react": "^19.1.1",
@@ -23,6 +24,7 @@
         "eslint-plugin-react-refresh": "^0.4.22",
         "globals": "^16.4.0",
         "prettier": "^3.6.2",
+        "sass": "^1.93.3",
         "vite": "^7.1.7"
     }
 }

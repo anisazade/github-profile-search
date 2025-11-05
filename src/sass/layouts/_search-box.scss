@@ -1,0 +1,15 @@
+.search-box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    
+    &--move-up{
+        transform: translateY(-36vh);
+        transition: all 1s;
+    }
+
+    &__sub{
+        font-size: 1.2rem;
+    }
+}

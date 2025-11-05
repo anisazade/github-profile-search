@@ -1,0 +1,47 @@
+@use "../abstract/variables" as *;
+
+.search-bar{
+    display: flex;
+    flex-direction: row;
+    border-radius: .5rem;
+    overflow: hidden;
+    height: 4rem;
+    margin: 1rem;
+    border: .2rem solid transparent;
+    background-color: $color-primary;
+    background-origin: border-box;
+    transition: box-shadow 0.5s ease-out, border-color 0.4s ease-out;
+    
+    &__icon{
+        height: 80%;
+    }
+    &__input::placeholder{
+        color: rgb(175, 175, 175);
+    }
+    
+    &:hover{
+        box-shadow: .8rem .8rem 2rem rgba($color-secondary,0.5);
+    }
+    
+    &:active, &:focus-within{
+        border-color: $color-secondary;
+    }
+    
+    &__input{
+        outline: none;
+        background-color: inherit;
+        color: inherit;
+        outline: none;
+        border: none;
+        padding: 1rem;
+    }
+    
+    &__button{
+        background-color: inherit;
+        color: inherit;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border: none;
+        padding: 1rem;
+    }
+}

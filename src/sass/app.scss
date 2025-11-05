@@ -1,0 +1,18 @@
+@use "abstract/variables" as *;
+
+@use "layouts/header";
+@use "layouts/search-box";
+
+@use "components/search-bar";
+
+@use "base/animations";
+
+.profile{
+    min-height: 74vh;
+    margin-top: 26vh;
+    transform: translateY(74vh);
+    background-color: $color-primary;
+    animation: slideUp 1s ease-out;
+    animation-fill-mode: forwards;
+    z-index: 100;
+}

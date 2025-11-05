@@ -1,0 +1,15 @@
+.header{
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-image: url(./assets/galaxy.jpg);
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    right:0;
+    left: 0;
+    z-index: -1;
+}
