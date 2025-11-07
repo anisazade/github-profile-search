@@ -4,15 +4,11 @@
 @use "layouts/search-box";
 
 @use "components/search-bar";
+@use "components/avatar";
 
 @use "base/animations";
+@use "base/utilities";
+@use "base/base";
+@use "base/typography";
 
-.profile{
-    min-height: 74vh;
-    margin-top: 26vh;
-    transform: translateY(74vh);
-    background-color: $color-primary;
-    animation: slideUp 1s ease-out;
-    animation-fill-mode: forwards;
-    z-index: 100;
-}
+@use "pages/home";

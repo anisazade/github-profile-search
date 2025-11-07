@@ -20,11 +20,11 @@
     }
     
     &:hover{
-        box-shadow: .8rem .8rem 2rem rgba($color-secondary,0.5);
+        box-shadow: .8rem .8rem 2rem rgba($color-tertiary,0.5);
     }
     
     &:active, &:focus-within{
-        border-color: $color-secondary;
+        border-color: $color-tertiary;
     }
     
     &__input{

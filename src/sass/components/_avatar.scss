@@ -1,0 +1,14 @@
+@use "../abstract/variables" as *;
+
+.avatar-box{
+    height: 18rem;
+    aspect-ratio: 1/1;
+    width: auto;
+    border-radius: 2rem;
+    overflow: hidden;
+    border: .7rem solid $color-primary;
+    &__img{
+        height: 100%;
+        object-fit: cover;
+    }
+}

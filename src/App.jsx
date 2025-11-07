@@ -5,30 +5,30 @@ import './App.css';
 function UserInformation({ user }) {
     return (
         <div className="profile__info">
-            <div className="profile__head-info">
-                <div className="profile__avatar-box">
+            <div className="profile__info-1 flex-row flex-centered">
+                <div className="avatar-box margin-top-n10">
                     <img
-                        className="profile__avatar-img"
+                        className="avatar-box__img"
                         src={user.avatar_url}
                         alt="Profile Picture"
                     />
                 </div>
-                <div className="profile__stats">
+                <div className="profile__stats flex-row flex-centered">
                     <div className="profile__stat profile__stat--followers">
-                        <span className="profile__stat-label">Followers </span>
+                        <span className="profile__stat-label">Followers</span>
                         <span className="profile__stat-value">{user.followers}</span>
                     </div>
                     <div className="profile__stat profile__stat--following">
-                        <span className="profile__stat-label">Following </span>
+                        <span className="profile__stat-label">Following</span>
                         <span className="profile__stat-value">{user.following}</span>
                     </div>
                     <div className="profile__stat profile__stat--loaction">
-                        <span className="profile__stat-label">Location </span>
+                        <span className="profile__stat-label">Location</span>
                         <span className="profile__stat-value"> {user.location}</span>
                     </div>
                 </div>
             </div>
-            <div className="profile__sub-info">
+            <div className="profile__info-2">
                 <h1 className="profile__name">{user.name}</h1>
                 <p className="profile__bio">{user.bio}</p>
             </div>
@@ -98,7 +98,7 @@ function Header({ onSearch, secClass }) {
                         type="text"
                         placeholder="Search"
                         id="search-input"
-                        class="search-bar__input"
+                        className="search-bar__input"
                         value={searchTerm}
                         onChange={function (event) {
                             setSearchTerm(event.target.value);
@@ -117,7 +117,7 @@ function Profile({ data }) {
             <div class="profile">
                 <UserInformation user={data.user} />
                 <RepositoryGrid repository_list={data.repos} />
-                <a href="">View all rpositories</a>
+                <a href="#">View all rpositories</a>
             </div>
         );
     }
@@ -134,7 +134,9 @@ function App() {
                 onSearch={handleSearch}
                 secClass={profile !== null ? ' search-box--move-up' : ''}
             />
-            <Profile data={profile} />
+            <section>
+                <Profile data={profile} />
+            </section>
         </>
     );
 }
