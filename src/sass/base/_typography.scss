@@ -1,9 +1,10 @@
-@use "../abstract/variables" as *;
+@use '../abstract/variables' as *;
 
 body {
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-    line-height: 1.5;
+    line-height: 1.7;
     font-weight: 400;
+    font-size: 1.5rem;
 
     color-scheme: light dark;
     color: $color-light-gray;
@@ -12,4 +13,12 @@ body {
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+.heading-secondary {
+    font-size: 2.3rem;
+}
+
+.heading-tertiary{
+    font-size: 1.6rem;
 }

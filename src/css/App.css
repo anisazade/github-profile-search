@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background-image: url(./assets/galaxy.jpg);
+  background-image: url(../assets/galaxy.jpg);
   background-position: center;
   background-size: cover;
   position: absolute;
@@ -36,7 +36,7 @@
   height: 4rem;
   margin: 1rem;
   border: 0.2rem solid transparent;
-  background-color: #52465a;
+  background-color: #3e4563;
   background-origin: border-box;
   transition: box-shadow 0.5s ease-out, border-color 0.4s ease-out;
 }
@@ -47,10 +47,10 @@
   color: rgb(175, 175, 175);
 }
 .search-bar:hover {
-  box-shadow: 0.8rem 0.8rem 2rem rgba(234, 206, 253, 0.5);
+  box-shadow: 0.8rem 0.8rem 2rem rgba(57, 74, 158, 0.5);
 }
 .search-bar:active, .search-bar:focus-within {
-  border-color: #eacefd;
+  border-color: #394a9e;
 }
 .search-bar__input {
   outline: none;
@@ -70,12 +70,12 @@
 }
 
 .avatar-box {
-  height: 18rem;
+  height: 20rem;
   aspect-ratio: 1/1;
   width: auto;
   border-radius: 2rem;
   overflow: hidden;
-  border: 0.7rem solid #52465a;
+  border: 0.7rem solid #3e4563;
 }
 .avatar-box__img {
   height: 100%;
@@ -91,7 +91,7 @@
   display: flex;
   flex-direction: row;
 }
-.flex-column {
+.flex-col {
   display: flex;
   flex-direction: column;
 }
@@ -100,8 +100,8 @@
   justify-content: center;
 }
 
-.margin-top-n10 {
-  margin-top: -10rem;
+.margin-top-neg-big {
+  margin-top: -9rem;
 }
 
 *,
@@ -122,8 +122,9 @@ body {
 
 body {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  line-height: 1.7;
   font-weight: 400;
+  font-size: 1.5rem;
   color-scheme: light dark;
   color: #dbdbdb;
   font-synthesis: none;
@@ -132,20 +133,46 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.profile {
-  min-height: 74vh;
+.heading-secondary {
+  font-size: 2.3rem;
+}
+
+.heading-tertiary {
+  font-size: 1.6rem;
+}
+
+.section-profile {
   margin-top: 35vh;
+  min-height: 74vh;
+  background-color: #3e4563;
   transform: translateY(74vh);
-  background-color: #52465a;
   animation: slideUp 1s ease-out;
   animation-fill-mode: forwards;
 }
+
+.profile {
+  max-width: 120rem;
+  margin: 0 auto;
+}
+.profile__info-1 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 2.5rem;
+}
+.profile__info-2 {
+  margin-bottom: 2.5rem;
+}
+.profile__stats {
+  margin-left: 5rem;
+}
 .profile__stat {
-  background-color: #352d3a;
-  margin-left: 2rem;
+  background-color: #262a3d;
   border-radius: 2rem;
-  font-size: 1.4rem;
   padding: 0.8rem;
+}
+.profile__stat:not(:first-child) {
+  margin-left: 2rem;
 }
 .profile__stat-label {
   display: inline-block;
@@ -156,6 +183,27 @@ body {
 .profile__stat-value {
   padding: 0.8rem 1.5rem;
   display: inline-block;
+}
+.profile__repository {
+  display: flex;
+  flex-direction: column;
+  border-radius: 2rem;
+  padding: 2rem;
+  background-image: linear-gradient(to right, #262a3d, #394a9e);
+  margin-bottom: 3rem;
+}
+.profile__repository-stats {
+  display: flex;
+  flex-direction: row;
+}
+.profile__repository-stat {
+  font-size: 1.3rem;
+}
+.profile__repository-stat:not(:first-child) {
+  margin-left: 2rem;
+}
+.profile__repository-stat-icon {
+  margin-right: 0.5rem;
 }
 
 /*# sourceMappingURL=App.css.map */

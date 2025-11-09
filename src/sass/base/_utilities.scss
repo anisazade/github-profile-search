@@ -1,21 +1,6 @@
 @use "../abstract/variables" as *;
 
-.flex{
-    &-row{
-        display: flex;
-        flex-direction: row;
-    }
-    &-column{
-        display: flex;
-        flex-direction: column;
-    }
-    &-centered{
-        align-items: center;
-        justify-content: center;
-    }
-}
-
-.margin-top-n10{
-    margin-top: -10rem;
+.margin-top-neg-big{
+    margin-top: -9rem;
 }
 

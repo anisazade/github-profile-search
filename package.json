@@ -8,7 +8,7 @@
         "build": "vite build",
         "lint": "eslint .",
         "preview": "vite preview",
-        "sasscmp": "sass --watch src/sass/app.scss src/App.css"
+        "sasscmp": "sass --watch src/sass/app.scss src/css/App.css"
     },
     "dependencies": {
         "react": "^19.1.1",
