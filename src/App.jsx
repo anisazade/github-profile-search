@@ -54,7 +54,7 @@ function UserInformation({ user }) {
                 <div className="avatar-box margin-top-neg-big">
                     <img className="avatar-box__img" src={user.avatar_url} alt="Profile Picture" />
                 </div>
-                <div className="profile__stats flex-row">
+                <div className="profile__stats">
                     <div className="profile__stat">
                         <span className="profile__stat-label">Followers</span>
                         <span className="profile__stat-value">{user.followers}</span>
@@ -69,7 +69,7 @@ function UserInformation({ user }) {
                     </div>
                 </div>
             </div>
-            <div className="profile__info-2 flex-col">
+            <div className="profile__info-2">
                 <h2 className="heading-secondary profile__name">{user.name}</h2>
                 <p className="profile__bio">{user.bio}</p>
             </div>

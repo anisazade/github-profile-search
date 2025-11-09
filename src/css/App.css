@@ -87,19 +87,6 @@
     transform: translateY(0);
   }
 }
-.flex-row {
-  display: flex;
-  flex-direction: row;
-}
-.flex-col {
-  display: flex;
-  flex-direction: column;
-}
-.flex-centered {
-  align-items: center;
-  justify-content: center;
-}
-
 .margin-top-neg-big {
   margin-top: -9rem;
 }
@@ -161,9 +148,12 @@ body {
   margin-bottom: 2.5rem;
 }
 .profile__info-2 {
-  margin-bottom: 2.5rem;
+  display: flex;
+  flex-direction: column;
 }
 .profile__stats {
+  display: flex;
+  flex-direction: row;
   margin-left: 5rem;
 }
 .profile__stat {

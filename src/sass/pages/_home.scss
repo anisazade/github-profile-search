@@ -21,11 +21,14 @@
             margin-bottom: 2.5rem;
         }
         &-2{
-            margin-bottom: 2.5rem;
+            display: flex;
+            flex-direction: column;
         }
     }
 
     &__stats {
+        display: flex;
+        flex-direction: row;
         margin-left: 5rem;
     }
 
