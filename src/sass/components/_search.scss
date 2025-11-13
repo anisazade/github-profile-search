@@ -1,0 +1,72 @@
+@use '../abstract/variables' as *;
+
+.search {
+    &__form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    &--move-up {
+        transform: translateY(-36vh);
+        transition: all 1s;
+    }
+
+    &__bar {
+        display: flex;
+        flex-direction: row;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        height: 4.7rem;
+        margin: 1rem 0;
+        border: 0.2rem solid transparent;
+        background-color: $color-primary;
+        background-origin: border-box;
+        transition:
+            box-shadow 0.5s ease-out,
+            border-color 0.4s ease-out;
+        &:hover {
+            box-shadow: 0rem 0.8rem 3rem rgba($color-primary-light-2, 0.5);
+        }
+
+        &:active,
+        &:focus-within {
+            border-color: $color-primary-light-2;
+        }
+    }
+
+    &__icon {
+        height: 80%;
+    }
+
+    &__input {
+        width: 40rem;
+        outline: none;
+        background-color: transparent;
+        color: inherit;
+        outline: none;
+        border: none;
+        padding: 1rem 2rem;
+        font-size: inherit;
+
+        &::placeholder {
+            color: rgb(175, 175, 175);
+        }
+    }
+
+    &__label {
+        font-size: 1.3rem;
+        font-weight: 500;
+        display: inline-block;
+    }
+
+    &__button {
+        background-color: transparent;
+        color: inherit;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border: none;
+        padding: 1rem;
+    }
+}

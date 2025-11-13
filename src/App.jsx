@@ -96,27 +96,29 @@ function Header({ onSearch, secClass }) {
 
     return (
         <header className="header">
-            <div className={'search-box' + secClass}>
-                <div className="search-bar">
-                    <button className="search-bar__button" onClick={() => onSearch(searchTerm)}>
-                        <img
-                            className="search-bar__icon"
-                            src="./src/assets/magnifying-glass-search-svgrepo-com.svg"
-                            alt="search-icon"
+            <div className={'search' + secClass}>
+                <form action="" className="search__form">
+                    <div className="search__bar">
+                        <button className="search__button" type="button" onClick={() => onSearch(searchTerm)}>
+                            <img
+                                className="search__icon"
+                                src="./src/assets/magnifying-glass-search-svgrepo-com.svg"
+                                alt="search-icon"
+                            />
+                        </button>
+                        <input
+                            type="text"
+                            placeholder="Search"
+                            id="search-input"
+                            className="search__input"
+                            value={searchTerm}
+                            onChange={function (event) {
+                                setSearchTerm(event.target.value);
+                            }}
                         />
-                    </button>
-                    <input
-                        type="text"
-                        placeholder="Search"
-                        id="search-input"
-                        className="search-bar__input"
-                        value={searchTerm}
-                        onChange={function (event) {
-                            setSearchTerm(event.target.value);
-                        }}
-                    />
-                </div>
-                <p className="search-box__sub">Search for an exisitng GitHub user</p>
+                    </div>
+                    <label for="search-input" className="search__label">Search for an exisitng GitHub user</label>
+                </form>
             </div>
         </header>
     );
@@ -131,7 +133,7 @@ function App() {
         <>
             <Header
                 onSearch={handleSearch}
-                secClass={profile !== null ? ' search-box--move-up' : ''}
+                secClass={profile !== null ? ' search--move-up' : ''}
             />
             <main>
                 <Profile data={profile} />
@@ -139,6 +141,8 @@ function App() {
         </>
     );
 }
+
+// Unil funcitons
 
 async function getProfile(username) {
     const userAPI = URL.parse(username, 'https://api.github.com/users/');

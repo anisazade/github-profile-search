@@ -33,7 +33,7 @@
     }
 
     &__stat {
-        background-color: $color-secondary;
+        background-color: $color-primary-dark;
         border-radius: 2rem;
         padding: 0.8rem;
 
@@ -60,7 +60,7 @@
         flex-direction: column;
         border-radius: 2rem;
         padding: 2rem;
-        background-image: linear-gradient(to right, $color-secondary, $color-tertiary);
+        background-image: linear-gradient(to right, $color-primary-dark, $color-primary-light-1);
         margin-bottom: 3rem;
 
         &-stats {

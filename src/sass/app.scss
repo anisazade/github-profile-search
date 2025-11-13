@@ -1,9 +1,8 @@
 @use "abstract/variables" as *;
 
 @use "layouts/header";
-@use "layouts/search-box";
 
-@use "components/search-bar";
+@use "components/search";
 @use "components/avatar";
 
 @use "base/animations";
