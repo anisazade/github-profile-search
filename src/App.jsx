@@ -117,7 +117,7 @@ function Header({ onSearch, secClass }) {
                             }}
                         />
                     </div>
-                    <label for="search-input" className="search__label">Search for an exisitng GitHub user</label>
+                    <label htmlFor="search-input" className="search__label">Search for an exisitng GitHub user</label>
                 </form>
             </div>
         </header>

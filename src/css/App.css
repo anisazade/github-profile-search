@@ -78,7 +78,8 @@
   width: auto;
   border-radius: 2rem;
   overflow: hidden;
-  border: 0.7rem solid #3e4563;
+  border: 0.7rem solid transparent;
+  background-color: #3e4563;
 }
 .avatar-box__img {
   height: 100%;
@@ -124,7 +125,7 @@ body {
 }
 
 .heading-secondary {
-  font-size: 2.3rem;
+  font-size: 2.6rem;
 }
 
 .heading-tertiary {
@@ -138,6 +139,7 @@ body {
   transform: translateY(74vh);
   animation: slideUp 1s ease-out;
   animation-fill-mode: forwards;
+  padding: 0 10rem;
 }
 
 .profile {
@@ -153,6 +155,7 @@ body {
 .profile__info-2 {
   display: flex;
   flex-direction: column;
+  margin-bottom: 3rem;
 }
 .profile__stats {
   display: flex;
@@ -161,7 +164,7 @@ body {
 }
 .profile__stat {
   background-color: #262a3d;
-  border-radius: 2rem;
+  border-radius: 1.3rem;
   padding: 0.8rem;
 }
 .profile__stat:not(:first-child) {
@@ -177,13 +180,24 @@ body {
   padding: 0.8rem 1.5rem;
   display: inline-block;
 }
+.profile__repositories {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
 .profile__repository {
   display: flex;
   flex-direction: column;
   border-radius: 2rem;
   padding: 2rem;
-  background-image: linear-gradient(to right, #262a3d, #394a9e);
-  margin-bottom: 3rem;
+  background-image: linear-gradient(to right, #262a3d, #202a61);
+}
+.profile__repository-title {
+  margin-bottom: 1rem;
+}
+.profile__repository-description {
+  margin-bottom: 2rem;
 }
 .profile__repository-stats {
   display: flex;
