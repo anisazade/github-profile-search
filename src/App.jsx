@@ -7,42 +7,43 @@ function RepositoryGrid({ repository_list }) {
         return <Repository key={repo.title} repository={repo} />;
     });
 
-    return <div className="profile__repositories">{reposJSX}</div>;
+    return <div className="grid-2-col">{reposJSX}</div>;
 }
 
 function Repository({ repository }) {
     return (
-        <div className="profile__repository">
-            <a className="profile__repository-link" href={repository.url} target="_blank"></a>
-            <div className="profile__repository-head-info">
-                <h3 className="heading-tertiary profile__repository-title">{repository.title}</h3>
-                <p className="profile__repository-description">{repository.description}</p>
-            </div>
-            <div className="profile__repository-stats">
-                {
-                    repository.licence_type 
-                    && 
-                    (<div className="profile__repository-stat">
-                            <i className="profile__repository-stat-icon icon-basic-bookmark"></i>
-                            <span className="profile__repository-stat-value">
-                                {repository.licence_type}
-                            </span>
-                    </div>)
-                }
-                <div className="profile__repository-stat">
-                    <i className="profile__repository-stat-icon icon-basic-signs"></i>
-                    <span className="profile__repository-stat-value">{repository.forks}</span>
+        <div className="repository">
+            <a className="repository__link" href={repository.url} target="_blank">
+                <div className="repository__head-info">
+                    <h3 className="heading-tertiary repository__title">{repository.title}</h3>
+                    <p className="repository__description">{repository.description}</p>
                 </div>
-                <div className="profile__repository-stat">
-                    <i className="profile__repository-stat-icon icon-basic-star"></i>
-                    <span className="profile__repository-stat-value">{repository.stars}</span>
+                <div className="repository__stats">
+                    {
+                        repository.licence_type 
+                        && 
+                        (<div className="repository__stat">
+                                <i className="repository__stat-icon icon-basic-bookmark"></i>
+                                <span className="repository__stat-value">
+                                    {repository.licence_type}
+                                </span>
+                        </div>)
+                    }
+                    <div className="repository__stat">
+                        <i className="repository__stat-icon icon-basic-signs"></i>
+                        <span className="repository__stat-value">{repository.forks}</span>
+                    </div>
+                    <div className="repository__stat">
+                        <i className="repository__stat-icon icon-basic-star"></i>
+                        <span className="repository__stat-value">{repository.stars}</span>
+                    </div>
+                    <div className="repository__stat">
+                        <span className="repository__stat-value">
+                            Updated {timeAgo(repository.last_modified)}
+                        </span>
+                    </div>
                 </div>
-                <div className="profile__repository-stat">
-                    <span className="profile__repository-stat-value">
-                        Updated {timeAgo(repository.last_modified)}
-                    </span>
-                </div>
-            </div>
+            </a>
         </div>
     );
 }
@@ -51,7 +52,7 @@ function UserInformation({ user }) {
     return (
         <>
             <div className="profile__info-1">
-                <div className="avatar-box margin-top-neg-big">
+                <div className="profile__avatar avatar-box margin-top-neg-big">
                     <img className="avatar-box__img" src={user.avatar_url} alt="Profile Picture" />
                 </div>
                 <div className="profile__stats">
@@ -84,7 +85,7 @@ function Profile({ data }) {
                 <div className="profile">
                     <UserInformation user={data.user} />
                     <RepositoryGrid repository_list={data.repos} />
-                    <a href="#">View all rpositories</a>
+                    <button class="btn-text">View all repositories</button>
                 </div>
             </section>
         );
@@ -142,8 +143,7 @@ function App() {
     );
 }
 
-// Unil funcitons
-
+// Util funcitons
 async function getProfile(username) {
     const userAPI = URL.parse(username, 'https://api.github.com/users/');
     const userJson = await fetch(userAPI, {
@@ -157,7 +157,12 @@ async function getProfile(username) {
 
     if (!userJson) return null;
 
-    const reposJson = await fetch(URL.parse(userJson.repos_url)).then((data) => data.json());
+    const reposJson = await fetch(userJson.repos_url+"?per_page=4", {
+        headers: {
+            Accept: 'application/vnd.github+json',
+            'X-GitHub-Api-Version': '2022-11-28',
+        },
+    }).then((data) => data.json());
     const user = {
         name: userJson.name,
         username: userJson.login,

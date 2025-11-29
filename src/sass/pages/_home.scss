@@ -1,7 +1,7 @@
 @use '../abstract/variables' as *;
 
 .section-profile {
-    margin-top: 35vh;
+    margin-top: 26vh;
     min-height: 74vh;
     background-color: $color-primary;
     transform: translateY(74vh);
@@ -11,15 +11,19 @@
 }
 
 .profile {
-    max-width: 120rem;
+    max-width: 110rem;
     margin: 0 auto;
+
+    &__avatar{
+        transform: translateY(1.5rem);
+    }
 
     &__info {
         &-1{
             display: flex;
             flex-direction: row;
-            align-items: center;
-            margin-bottom: 2.5rem;
+            align-items: flex-end;
+            margin-bottom: 3.5rem;
         }
         &-2{
             display: flex;
@@ -32,69 +36,72 @@
         display: flex;
         flex-direction: row;
         margin-left: 5rem;
+        margin-top: 2rem;
     }
 
     &__stat {
         background-color: $color-primary-dark;
         border-radius: 1.3rem;
-        padding: 0.8rem;
+        padding: .6rem .9rem;
 
         &:not(:first-child) {
             margin-left: 2rem;
         }
 
-        &-label {
-            display: inline-block;
-            color: rgba($color-light-gray, 0.4);
-            // margin-right: 1rem;
-            padding: 0.8rem 1.5rem;
-            border-right: 0.1rem solid rgba($color-light-gray, 0.2);
-        }
+    }
+    
+    &__stat-label {
+        display: inline-block;
+        color: rgba($color-light-gray, 0.4);
+        padding: 0.6rem 1.5rem;
+        border-right: 0.1rem solid rgba($color-light-gray, 0.2);
+    }
 
-        &-value {
-            padding: 0.8rem 1.5rem;
+    &__stat-value {
+        padding: 0.6rem 1.5rem;
+        display: inline-block;
+    }
+}
+
+.repository{
+    display: flex;
+    flex-direction: column;
+    border-radius: 2rem;
+    padding: 2rem;
+    background-image: linear-gradient(95deg, $color-primary-dark 3%, $color-primary-light-1 99.61%);
+
+    &__link{
+        &:visited, 
+        &:link{
             display: inline-block;
+            text-decoration: none;
+            color: $color-dark-gray;
         }
     }
 
-    &__repositories{
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 4rem;
-        align-items: start;
+    &__title{
+        color: $color-light-gray;
+        margin-bottom: 1rem;
     }
-
-    &__repository {
+    
+    &__description{
+        margin-bottom: 2rem;
+    }
+    
+    &__stats {
         display: flex;
-        flex-direction: column;
-        border-radius: 2rem;
-        padding: 2rem;
-        background-image: linear-gradient(to right, $color-primary-dark, $color-primary-light-1);
-        // margin-bottom: 3rem;
-
-        &-title{
-            margin-bottom: 1rem;
-        }
-
-        &-description{
-            margin-bottom: 2rem;
-        }
-
-        &-stats {
-            display: flex;
-            flex-direction: row;
-        }
-
-        &-stat{
-            font-size: 1.3rem;
-
-            &:not(:first-child){
-                margin-left: 2rem;
-            }
-            &-icon{
-                margin-right: .5rem;
-            }
+        flex-direction: row;
+    }
+    
+    &__stat{
+        font-size: 1.3rem;
+    
+        &:not(:first-child){
+            margin-left: 2rem;
         }
     }
 
+    &__stat-icon{
+        margin-right: .5rem;
+    }
 }

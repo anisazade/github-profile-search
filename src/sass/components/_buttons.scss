@@ -1,0 +1,11 @@
+@use '../abstract/variables' as *;
+
+.btn-text{
+    display: block;
+    border: none;
+    background: none;
+    color: $color-dark-gray;
+    margin: 5rem auto;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
