@@ -19,16 +19,14 @@ function Repository({ repository }) {
                     <p className="repository__description">{repository.description}</p>
                 </div>
                 <div className="repository__stats">
-                    {
-                        repository.licence_type 
-                        && 
-                        (<div className="repository__stat">
-                                <i className="repository__stat-icon icon-basic-bookmark"></i>
-                                <span className="repository__stat-value">
-                                    {repository.licence_type}
-                                </span>
-                        </div>)
-                    }
+                    {repository.licence_type && (
+                        <div className="repository__stat">
+                            <i className="repository__stat-icon icon-basic-bookmark"></i>
+                            <span className="repository__stat-value">
+                                {repository.licence_type}
+                            </span>
+                        </div>
+                    )}
                     <div className="repository__stat">
                         <i className="repository__stat-icon icon-basic-signs"></i>
                         <span className="repository__stat-value">{repository.forks}</span>
@@ -98,9 +96,13 @@ function Header({ onSearch, secClass }) {
     return (
         <header className="header">
             <div className={'search' + secClass}>
-                <form action="" className="search__form">
+                <form action="#" className="search__form">
                     <div className="search__bar">
-                        <button className="search__button" type="button" onClick={() => onSearch(searchTerm)}>
+                        <button
+                            className="search__button"
+                            type="button"
+                            onClick={() => onSearch(searchTerm)}
+                        >
                             <img
                                 className="search__icon"
                                 src="./src/assets/magnifying-glass-search-svgrepo-com.svg"
@@ -118,7 +120,9 @@ function Header({ onSearch, secClass }) {
                             }}
                         />
                     </div>
-                    <label htmlFor="search-input" className="search__label">Search for an exisitng GitHub user</label>
+                    <label htmlFor="search-input" className="search__label">
+                        Search for an exisitng GitHub user
+                    </label>
                 </form>
             </div>
         </header>
@@ -132,10 +136,7 @@ function App() {
     }
     return (
         <>
-            <Header
-                onSearch={handleSearch}
-                secClass={profile !== null ? ' search--move-up' : ''}
-            />
+            <Header onSearch={handleSearch} secClass={profile !== null ? ' search--move-up' : ''} />
             <main>
                 <Profile data={profile} />
             </main>
@@ -157,7 +158,7 @@ async function getProfile(username) {
 
     if (!userJson) return null;
 
-    const reposJson = await fetch(userJson.repos_url+"?per_page=4", {
+    const reposJson = await fetch(userJson.repos_url + '?per_page=4', {
         headers: {
             Accept: 'application/vnd.github+json',
             'X-GitHub-Api-Version': '2022-11-28',

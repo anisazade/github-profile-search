@@ -1,9 +1,10 @@
-@use '../abstract/variables' as *;
 
+// Eceptions
 .margin-top-neg-big {
     margin-top: -9rem;
 }
 
+// Layout
 .grid-2-col {
     display: grid;
     grid-template-columns: 1fr 1fr;

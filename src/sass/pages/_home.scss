@@ -1,21 +1,28 @@
-@use '../abstract/variables' as *;
 
 .section-profile {
     margin-top: 26vh;
     min-height: 74vh;
-    background-color: $color-primary;
+    background-color: var(--color-primary);
     transform: translateY(74vh);
     animation: slideUp 1s ease-out;
     animation-fill-mode: forwards;
-    padding: 0 10rem;
+    padding: 0 5rem;
+}
+
+.profile-grid{
+    display: grid;
+    grid-template-areas: 
+    "avatar state state state"
+    "info info info info"
+    "repo repo repo repo";    
 }
 
 .profile {
-    max-width: 110rem;
+    max-width: 70rem;
     margin: 0 auto;
 
     &__avatar{
-        transform: translateY(1.5rem);
+        transform: translateY(.5rem);
     }
 
     &__info {
@@ -23,42 +30,42 @@
             display: flex;
             flex-direction: row;
             align-items: flex-end;
-            margin-bottom: 3.5rem;
+            margin-bottom: 2rem;
+            margin-top: 1.7rem;
         }
         &-2{
             display: flex;
             flex-direction: column;
-            margin-bottom: 3rem;
+            margin-bottom: 2.5rem;
         }
     }
 
     &__stats {
         display: flex;
         flex-direction: row;
-        margin-left: 5rem;
-        margin-top: 2rem;
+        margin-left: 2.5rem;
+        margin-top: 1.2rem;
     }
-
+    
     &__stat {
-        background-color: $color-primary-dark;
-        border-radius: 1.3rem;
-        padding: .6rem .9rem;
+        background-color: var(--color-primary-dark);
+        border-radius: .8rem;
+        padding: .4em .4em;
 
         &:not(:first-child) {
-            margin-left: 2rem;
+            margin-left: 1.2rem;
         }
-
     }
     
     &__stat-label {
         display: inline-block;
-        color: rgba($color-light-gray, 0.4);
-        padding: 0.6rem 1.5rem;
-        border-right: 0.1rem solid rgba($color-light-gray, 0.2);
+        color: var(--color-light-gray);
+        padding: 0.3em 1em;
+        border-right: 1px solid var(--color-light-gray);
     }
-
+    
     &__stat-value {
-        padding: 0.6rem 1.5rem;
+        padding: 0.5em 1.2em;
         display: inline-block;
     }
 }
@@ -66,26 +73,26 @@
 .repository{
     display: flex;
     flex-direction: column;
-    border-radius: 2rem;
-    padding: 2rem;
-    background-image: linear-gradient(95deg, $color-primary-dark 3%, $color-primary-light-1 99.61%);
+    border-radius: 1.3rem;
+    padding: 1.7em;
+    background-image: linear-gradient(95deg, var(--color-primary-dark) 3%, var(--color-primary-light-1) 99.61%);
 
     &__link{
         &:visited, 
         &:link{
             display: inline-block;
             text-decoration: none;
-            color: $color-dark-gray;
+            color: var(--color-dark-gray);
         }
     }
 
     &__title{
-        color: $color-light-gray;
-        margin-bottom: 1rem;
+        color: var(--color-light-gray);
+        margin-bottom: .7rem;
     }
     
     &__description{
-        margin-bottom: 2rem;
+        margin-bottom: 1.2rem;
     }
     
     &__stats {
@@ -94,10 +101,10 @@
     }
     
     &__stat{
-        font-size: 1.3rem;
+        font-size: .9rem;
     
         &:not(:first-child){
-            margin-left: 2rem;
+            margin-left: 1.7rem;
         }
     }
 
