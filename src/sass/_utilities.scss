@@ -1,5 +1,10 @@
+// Token utilities
+move-up-animation {
+    transform: translateY(-36vh);
+    transition: transform 1s;
+}
 
-// Eceptions
+// Exceptions
 .margin-top-neg-big {
     margin-top: -9rem;
 }

@@ -1,3 +1,103 @@
+.header{
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-image: url(../assets/galaxy.jpg);
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    right:0;
+    left: 0;
+    z-index: -1;
+}
+
+.avatar-box{
+    height: 11rem;
+    aspect-ratio: 1/1;
+    border-radius: 1rem;
+    overflow: hidden;
+    border: .5rem solid transparent;
+    background-color: var(--color-primary);
+    &__img{
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.btn-text{
+    display: block;
+    border: none;
+    background: none;
+    color: var(--color-dark-gray);
+    margin: 2em auto;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+
+.search {
+    &__form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    &__bar {
+        display: flex;
+        flex-direction: row;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        height: 2.6rem;
+        margin: .8rem 0;
+        border: 2px solid transparent;
+        background-color: var(--color-primary);
+        background-origin: border-box;
+        transition:
+            border-color 0.4s ease-out;
+
+        &:active,
+        &:focus-within {
+            border-color: var(--color-primary-light-2);
+        }
+    }
+
+    &__icon {
+        height: 60%;
+    }
+
+    &__input {
+        width: 30rem;
+        outline: none;
+        background-color: transparent;
+        color: inherit;
+        outline: none;
+        border: none;
+        padding: .7rem 1.2rem;
+        font-size: .9rem;
+
+        &::placeholder {
+            color: rgb(175, 175, 175);
+        }
+    }
+
+    &__label {
+        font-weight: 500;
+        display: inline-block;
+        font-size: .9rem;
+    }
+
+    &__button {
+        background-color: transparent;
+        color: inherit;
+        border: none;
+        padding: .3em 1em;
+    }
+}
+
 
 .section-profile {
     margin-top: 26vh;
@@ -112,3 +212,11 @@
         margin-right: .5rem;
     }
 }
+
+// Animations
+@keyframes slideUp{
+    100%{
+        transform: translateY(0);
+    }
+}
+

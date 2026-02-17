@@ -1,12 +1,4 @@
-@use "layouts/header";
-
-@use "components/search";
-@use "components/avatar";
-@use "components/buttons";
-
-@use "base/animations";
-@use "base/utilities";
-@use "base/base";
-@use "base/typography";
-
-@use "pages/home";
+@use "reset";
+@use "base";
+@use "utilities";
+@use "blocks";

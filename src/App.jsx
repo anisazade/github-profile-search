@@ -136,7 +136,7 @@ function App() {
     }
     return (
         <>
-            <Header onSearch={handleSearch} secClass={profile !== null ? ' search--move-up' : ''} />
+            <Header onSearch={handleSearch} secClass={profile !== null ? 'move-up-animation' : ''} />
             <main>
                 <Profile data={profile} />
             </main>
