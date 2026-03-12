@@ -5,18 +5,17 @@
     --color-primary-light-2:  #7a74ff; //primary-light-2
 
     --color-light-gray: #dbdbdb;
-    --color-dark-gray: #ccccccd5;
+    --color-dark-gray: #ccccccd8;
     --color-white: #fff;
     --color-black: #000;
 }
 
-
 body {
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-    line-height: 1.7;
     font-weight: 400;
-
+    line-height: 1.5;
     color: var(--color-light-gray);
+    font-size: clamp(0.87rem, 1.8vw, 1.1rem);
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
@@ -25,9 +24,23 @@ body {
 }
 
 h2 {
-    font-size: 1.4rem;
+    font-size: 1.4em;
 }
 
 h3 {
-    font-size: 1.2rem;
+    font-size: 1.2em;
+}
+
+h1, h2, h3{
+    text-wrap: none;
+}
+
+input, button{
+    color: inherit;
+    background-color: transparent;
+    border: none;
+}
+
+button{
+    cursor: pointer;
 }

@@ -1,44 +1,40 @@
 import { useState } from 'react';
-// import { use } from 'react';
 import './css/App.css';
+import data from './data.json';
 
 function RepositoryGrid({ repository_list }) {
     const reposJSX = repository_list.map((repo) => {
         return <Repository key={repo.title} repository={repo} />;
     });
 
-    return <div className="grid-2-col">{reposJSX}</div>;
+    return <div className="repo-grid">{reposJSX}</div>;
 }
 
 function Repository({ repository }) {
     return (
         <div className="repository">
-            <a className="repository__link" href={repository.url} target="_blank">
-                <div className="repository__head-info">
-                    <h3 className="heading-tertiary repository__title">{repository.title}</h3>
-                    <p className="repository__description">{repository.description}</p>
+            <a className="repository__link stack-gap-meduim" href={repository.url} target="_blank">
+                <div className="stack-gap-small">
+                    <h3 className="repository__title">{repository.title}</h3>
+                    <p>{repository.description}</p>
                 </div>
-                <div className="repository__stats">
-                    {repository.licence_type && (
+                <div className="repository__stats flex-gap-meduim font-size-200">
+                    {repository.license && (
                         <div className="repository__stat">
                             <i className="repository__stat-icon icon-basic-bookmark"></i>
-                            <span className="repository__stat-value">
-                                {repository.licence_type}
-                            </span>
+                            <span>{repository.license}</span>
                         </div>
                     )}
                     <div className="repository__stat">
                         <i className="repository__stat-icon icon-basic-signs"></i>
-                        <span className="repository__stat-value">{repository.forks}</span>
+                        <span>{repository.forks}</span>
                     </div>
                     <div className="repository__stat">
                         <i className="repository__stat-icon icon-basic-star"></i>
-                        <span className="repository__stat-value">{repository.stars}</span>
+                        <span>{repository.stars}</span>
                     </div>
                     <div className="repository__stat">
-                        <span className="repository__stat-value">
-                            Updated {timeAgo(repository.last_modified)}
-                        </span>
+                        <span> Updated {timeAgo(repository.last_modified)}</span>
                     </div>
                 </div>
             </a>
@@ -49,11 +45,11 @@ function Repository({ repository }) {
 function UserInformation({ user }) {
     return (
         <>
-            <div className="profile__info-1">
-                <div className="profile__avatar avatar-box margin-top-neg-big">
+            <div className="profile__info-1 flex-gap-big">
+                <div className="profile__avatar avatar-box margin-top-neg-big bg-primary">
                     <img className="avatar-box__img" src={user.avatar_url} alt="Profile Picture" />
                 </div>
-                <div className="profile__stats">
+                <div className="profile__stats font-size-300">
                     <div className="profile__stat">
                         <span className="profile__stat-label">Followers</span>
                         <span className="profile__stat-value">{user.followers}</span>
@@ -68,7 +64,7 @@ function UserInformation({ user }) {
                     </div>
                 </div>
             </div>
-            <div className="profile__info-2">
+            <div className="stack-gap-small">
                 <h2 className="heading-secondary profile__name">{user.name}</h2>
                 <p className="profile__bio">{user.bio}</p>
             </div>
@@ -79,11 +75,11 @@ function UserInformation({ user }) {
 function Profile({ data }) {
     if (data) {
         return (
-            <section class="section-profile">
-                <div className="profile">
+            <section class="section-profile bg-primary">
+                <div className="profile flow-centered stack-gap-big">
                     <UserInformation user={data.user} />
                     <RepositoryGrid repository_list={data.repos} />
-                    <button class="btn-text">View all repositories</button>
+                    <a class="btn-text flow-centered">View all repositories</a>
                 </div>
             </section>
         );
@@ -94,14 +90,14 @@ function Header({ onSearch, secClass }) {
     const [searchTerm, setSearchTerm] = useState('');
 
     return (
-        <header className="header">
-            <div className={'search' + secClass}>
-                <form action="#" className="search__form">
-                    <div className="search__bar">
+        <header className="header flex-centered">
+            <div className={'search font-size-300 ' + secClass}>
+                <form action="#" className="search__form stack-gap-small">
+                    <div className="search__bar bg-primary flex-plain">
                         <button
                             className="search__button"
                             type="button"
-                            onClick={() => onSearch(searchTerm)}
+                            onClick={() => onSearch(searchTerm, false)}
                         >
                             <img
                                 className="search__icon"
@@ -120,7 +116,7 @@ function Header({ onSearch, secClass }) {
                             }}
                         />
                     </div>
-                    <label htmlFor="search-input" className="search__label">
+                    <label for="search-input" className="search__label">
                         Search for an exisitng GitHub user
                     </label>
                 </form>
@@ -131,8 +127,16 @@ function Header({ onSearch, secClass }) {
 
 function App() {
     const [profile, setProfile] = useState(null);
-    function handleSearch(username) {
-        getProfile(username).then(setProfile);
+    function handleSearch(username, isOnline) {
+        // Offline data
+        if(isOnline){
+            // Online data
+            getProfile(username).then(setProfile);
+        }
+        else{
+            setProfile(data);
+        }
+
     }
     return (
         <>

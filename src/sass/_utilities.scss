@@ -1,18 +1,67 @@
 // Token utilities
-move-up-animation {
-    transform: translateY(-36vh);
+.move-up-animation {
+    transform: translateY(-38vh);
     transition: transform 1s;
 }
 
-// Exceptions
-.margin-top-neg-big {
-    margin-top: -9rem;
+.bg-primary{
+    background-color: var(--color-primary);
 }
 
 // Layout
-.grid-2-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: start;
+.flex-plain{
+    display: flex;
+}
+
+.flex-centered{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-gap-small{
+    display: flex;
+    gap: .7em;   
+}
+
+.flex-gap-meduim{
+    display: flex;
+    gap: 1em;  
+}
+
+.flex-gap-big{
+    display: flex;
+    gap: 1.5em;   
+}
+
+.flow-centered{
+    display: block;
+    margin: 0 auto;
+}
+
+.stack-gap-small{
+    > * + *{
+        margin-top: 1em;
+    }
+}
+
+.stack-gap-meduim{
+    > * + *{
+        margin-top: 1.5em;
+    }
+}
+
+.stack-gap-big{
+    > * + *{
+        margin-top: 2em;
+    }
+}
+
+// Token utilities
+.font-size-200{
+    font-size: 0.8em;
+}
+
+.font-size-300{
+    font-size: 0.9em;
 }
