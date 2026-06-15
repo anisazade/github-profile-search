@@ -1,18 +1,21 @@
 // Token utilities
-.move-up-animation {
-    transform: translateY(-38vh);
-    transition: transform 1s;
+.shrink{ 
+    height: var(--shrink-size);
 }
 
 .bg-primary{
     background-color: var(--color-primary);
 }
 
-// Layout
-.flex-plain{
-    display: flex;
+.font-size-200{
+    font-size: clamp(.79rem, 1.3vw, .87rem);
 }
 
+.font-size-300{
+    font-size: clamp(.9rem, 1.5vw, 1.1rem);
+}
+
+// Layout
 .flex-centered{
     display: flex;
     align-items: center;
@@ -21,17 +24,17 @@
 
 .flex-gap-small{
     display: flex;
-    gap: .7em;   
+    gap: var(--space-300);
 }
 
 .flex-gap-meduim{
     display: flex;
-    gap: 1em;  
+    gap: var(--space-400);  
 }
 
 .flex-gap-big{
     display: flex;
-    gap: 1.5em;   
+    gap: var(--space-500);
 }
 
 .flow-centered{
@@ -41,27 +44,18 @@
 
 .stack-gap-small{
     > * + *{
-        margin-top: 1em;
+        margin-top: var(--space-300);
     }
 }
 
 .stack-gap-meduim{
     > * + *{
-        margin-top: 1.5em;
+        margin-top: var(--space-400);
     }
 }
 
 .stack-gap-big{
     > * + *{
-        margin-top: 2em;
+        margin-top: var(--space-500);
     }
-}
-
-// Token utilities
-.font-size-200{
-    font-size: 0.8em;
-}
-
-.font-size-300{
-    font-size: 0.9em;
 }

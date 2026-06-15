@@ -8,6 +8,11 @@
     --color-dark-gray: #ccccccd8;
     --color-white: #fff;
     --color-black: #000;
+
+    --space-300: clamp( .7rem, 1vw, 1rem);
+    --space-400: clamp( 1.2rem, 2vw, 1.5rem);
+    --space-500: clamp( 2rem, 3vw, 3rem);
+    --font-size-300: clamp(.8rem, 2.2vw, .95rem);
 }
 
 body {
@@ -15,20 +20,26 @@ body {
     font-weight: 400;
     line-height: 1.5;
     color: var(--color-light-gray);
-    font-size: clamp(0.87rem, 1.8vw, 1.1rem);
-
+    font-size: 1rem;
+    
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
+header{
+    height: 100vh;
+    --shrink-size: 30vh;
+    transition: height 1s;
+}
+
 h2 {
-    font-size: 1.4em;
+    font-size: clamp(1.5rem, 3vw, 1.6rem);
 }
 
 h3 {
-    font-size: 1.2em;
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
 }
 
 h1, h2, h3{
@@ -41,6 +52,12 @@ input, button{
     border: none;
 }
 
-button{
+button, a{
     cursor: pointer;
+}
+
+a:visited,
+a:link {
+    color: var(--color-dark-gray);
+    text-decoration: none;
 }

@@ -1,32 +1,20 @@
-.header {
+.bg-fixed{    
+    height: 100vh;
     position: absolute;
-    inset: 0;
-
+    top: 0;
+    right: 0;
+    left: 0;
     background-image: url(../assets/galaxy.jpg);
     background-position: center;
     background-size: cover;
 }
 
-.btn-text {
-    color: var(--color-dark-gray);
-    text-align: center;
-}
-
 .search {
     &__bar {
+        display: flex;
         border-radius: 0.5rem;
         overflow: hidden;
         height: 2.8em;
-
-        // border: 2px solid transparent;
-        // background-origin: border-box;
-        // transition:
-        //     border-color 0.4s ease-out;
-
-        // &:active,
-        // &:focus-within {
-        //     border-color: var(--color-primary-light-2);
-        // }
     }
 
     &__input {
@@ -42,8 +30,6 @@
 
     &__label {
         font-weight: 500;
-        text-align: center;
-        display: block;
     }
 
     &__icon {
@@ -58,12 +44,10 @@
 }
 
 .section-profile {
-    margin-top: 28vh;
     min-height: 72vh;
     transform: translateY(75vh);
     animation: slideUp 1s ease-out;
     animation-fill-mode: forwards;
-    padding: 0 2em 2em 2em;
 }
 
 .avatar-box {
@@ -71,15 +55,16 @@
     border-radius: 1rem;
     overflow: hidden;
     border: 0.5rem solid transparent;
-    width: clamp(8rem, 18vw, 10rem);
+    width: clamp(9.5rem, 18vw, 11rem);
 
-    &__img {
+    img {
         object-fit: cover;
     }
 }
 
 .profile {
     max-width: 70rem;
+    padding: var(--space-500);
 
     &__avatar {
         transform: translateY(0.5rem);
@@ -87,12 +72,6 @@
         flex: auto 0 0;
         min-width: 7rem;
         align-self: flex-end;
-    }
-
-    &__info {
-        &-1 {
-            padding-top: 1.4em;
-        }
     }
 
     &__stats {
@@ -144,7 +123,6 @@
         &:link {
             display: inline-block;
             text-decoration: none;
-            color: var(--color-dark-gray);
         }
     }
 
@@ -165,7 +143,7 @@
 }
 
 // Media Queries
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 850px) {
     .profile {
         &__stat {
             display: flex;
@@ -186,19 +164,17 @@
     }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 700px) {
     .profile {
-        text-align: center;
+        padding-top: 1em;
 
-        &__info-1 {
+        & > *:not(.repo-grid) {
             display: block;
-            padding-top: 1em;
-            > * + * {
-                margin-top: 1em;
-            }
+            text-align: center;
         }
+
         &__avatar {
-            margin: -5em auto 0 auto;
+            margin: calc(-3 * var(--space-500)) auto var(--space-300) auto;
             transform: translate(0);
         }
 
@@ -209,9 +185,5 @@
 
     .repo-grid {
         grid-template-columns: 1fr;
-    }
-
-    .repository {
-        text-align: start;
     }
 }

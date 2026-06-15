@@ -18,7 +18,7 @@ function Repository({ repository }) {
                     <h3 className="repository__title">{repository.title}</h3>
                     <p>{repository.description}</p>
                 </div>
-                <div className="repository__stats flex-gap-meduim font-size-200">
+                <div className="flex-gap-meduim font-size-200">
                     {repository.license && (
                         <div className="repository__stat">
                             <i className="repository__stat-icon icon-basic-bookmark"></i>
@@ -45,9 +45,9 @@ function Repository({ repository }) {
 function UserInformation({ user }) {
     return (
         <>
-            <div className="profile__info-1 flex-gap-big">
-                <div className="profile__avatar avatar-box margin-top-neg-big bg-primary">
-                    <img className="avatar-box__img" src={user.avatar_url} alt="Profile Picture" />
+            <div className="flex-gap-big">
+                <div className="profile__avatar avatar-box bg-primary">
+                    <img src={user.avatar_url} alt="Profile Picture" />
                 </div>
                 <div className="profile__stats font-size-300">
                     <div className="profile__stat">
@@ -58,10 +58,14 @@ function UserInformation({ user }) {
                         <span className="profile__stat-label">Following</span>
                         <span className="profile__stat-value">{user.following}</span>
                     </div>
-                    <div className="profile__stat">
-                        <span className="profile__stat-label">Location</span>
-                        <span className="profile__stat-value"> {user.location}</span>
-                    </div>
+                    {   
+                        user.location && (
+                            <div className="profile__stat">
+                                <span className="profile__stat-label">Location</span>
+                                <span className="profile__stat-value"> {user.location}</span>
+                            </div>
+                        )
+                    }
                 </div>
             </div>
             <div className="stack-gap-small">
@@ -75,29 +79,29 @@ function UserInformation({ user }) {
 function Profile({ data }) {
     if (data) {
         return (
-            <section class="section-profile bg-primary">
+            <section className="section-profile bg-primary">
                 <div className="profile flow-centered stack-gap-big">
                     <UserInformation user={data.user} />
                     <RepositoryGrid repository_list={data.repos} />
-                    <a class="btn-text flow-centered">View all repositories</a>
+                    <a className="flex-centered" href={data.user.repos_page} target='_blank'>View all repositories</a>
                 </div>
             </section>
         );
     }
 }
 
-function Header({ onSearch, secClass }) {
+function Header({ onSearch, shrink}) {
     const [searchTerm, setSearchTerm] = useState('');
 
     return (
-        <header className="header flex-centered">
-            <div className={'search font-size-300 ' + secClass}>
+        <header className={'flex-centered '+ (shrink ? 'shrink' : '')}>
+            <div className="search flow-centered font-size-300">
                 <form action="#" className="search__form stack-gap-small">
-                    <div className="search__bar bg-primary flex-plain">
+                    <div className="search__bar bg-primary">
                         <button
                             className="search__button"
                             type="button"
-                            onClick={() => onSearch(searchTerm, false)}
+                            onClick={() => onSearch(searchTerm, true)}
                         >
                             <img
                                 className="search__icon"
@@ -116,7 +120,7 @@ function Header({ onSearch, secClass }) {
                             }}
                         />
                     </div>
-                    <label for="search-input" className="search__label">
+                    <label htmlFor="search-input" className="search__label flex-centered">
                         Search for an exisitng GitHub user
                     </label>
                 </form>
@@ -127,24 +131,16 @@ function Header({ onSearch, secClass }) {
 
 function App() {
     const [profile, setProfile] = useState(null);
-    function handleSearch(username, isOnline) {
-        // Offline data
-        if(isOnline){
-            // Online data
-            getProfile(username).then(setProfile);
-        }
-        else{
-            setProfile(data);
-        }
-
+    function handleSearch(username) {
+        getProfile(username).then(setProfile);
     }
     return (
-        <>
-            <Header onSearch={handleSearch} secClass={profile !== null ? 'move-up-animation' : ''} />
+        <div className="bg-fixed">
+            <Header onSearch={handleSearch} shrink={ profile ? true : false} />
             <main>
                 <Profile data={profile} />
             </main>
-        </>
+        </div>
     );
 }
 
@@ -176,6 +172,7 @@ async function getProfile(username) {
         followers: userJson.followers,
         following: userJson.following,
         location: userJson.location,
+        repos_page: "https://github.com/"+ userJson.login + "?tab=repositories"
     };
     const repos = reposJson.map((repo) => {
         return {
@@ -188,7 +185,7 @@ async function getProfile(username) {
             url: repo.clone_url,
         };
     });
-    console.log({ user, repos });
+    console.log({ user, repos, userJson });
     return { user, repos };
 }
 

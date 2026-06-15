@@ -14,6 +14,10 @@ html {
   text-size-adjust: none;
 }
 
+body {
+  min-height: 100vh;
+}
+
 /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
 ul[role=list],
 ol[role=list] {
@@ -39,7 +43,7 @@ h4 {
   text-wrap: balance;
 }
 
-/* A elements that don't have a class get default styles */
+/* <a> elements that don't have a class get default styles */
 a:not([class]) {
   text-decoration-skip-ink: auto;
   color: currentColor;
@@ -61,7 +65,7 @@ select {
   font-size: inherit;
 }
 
-/* Make sure textareas without a rows attribute are not tiny */
+/* Make sure textareas without rows attribute are not tiny */
 textarea:not([rows]) {
   min-height: 10em;
 }
@@ -80,6 +84,10 @@ textarea:not([rows]) {
   --color-dark-gray: #ccccccd8;
   --color-white: #fff;
   --color-black: #000;
+  --space-300: clamp( .7rem, 1vw, 1rem);
+  --space-400: clamp( 1.2rem, 2vw, 1.5rem);
+  --space-500: clamp( 2rem, 3vw, 3rem);
+  --font-size-300: clamp(.8rem, 2.2vw, .95rem);
 }
 
 body {
@@ -87,19 +95,25 @@ body {
   font-weight: 400;
   line-height: 1.5;
   color: var(--color-light-gray);
-  font-size: clamp(0.87rem, 1.8vw, 1.1rem);
+  font-size: 1rem;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+header {
+  height: 100vh;
+  --shrink-size: 30vh;
+  transition: height 1s;
+}
+
 h2 {
-  font-size: 1.4em;
+  font-size: clamp(1.5rem, 3vw, 1.6rem);
 }
 
 h3 {
-  font-size: 1.2em;
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
 }
 
 h1, h2, h3 {
@@ -112,21 +126,30 @@ input, button {
   border: none;
 }
 
-button {
+button, a {
   cursor: pointer;
 }
 
-.move-up-animation {
-  transform: translateY(-38vh);
-  transition: transform 1s;
+a:visited,
+a:link {
+  color: var(--color-dark-gray);
+  text-decoration: none;
+}
+
+.shrink {
+  height: var(--shrink-size);
 }
 
 .bg-primary {
   background-color: var(--color-primary);
 }
 
-.flex-plain {
-  display: flex;
+.font-size-200 {
+  font-size: clamp(0.79rem, 1.3vw, 0.87rem);
+}
+
+.font-size-300 {
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
 }
 
 .flex-centered {
@@ -137,17 +160,17 @@ button {
 
 .flex-gap-small {
   display: flex;
-  gap: 0.7em;
+  gap: var(--space-300);
 }
 
 .flex-gap-meduim {
   display: flex;
-  gap: 1em;
+  gap: var(--space-400);
 }
 
 .flex-gap-big {
   display: flex;
-  gap: 1.5em;
+  gap: var(--space-500);
 }
 
 .flow-centered {
@@ -156,39 +179,30 @@ button {
 }
 
 .stack-gap-small > * + * {
-  margin-top: 1em;
+  margin-top: var(--space-300);
 }
 
 .stack-gap-meduim > * + * {
-  margin-top: 1.5em;
+  margin-top: var(--space-400);
 }
 
 .stack-gap-big > * + * {
-  margin-top: 2em;
+  margin-top: var(--space-500);
 }
 
-.font-size-200 {
-  font-size: 0.8em;
-}
-
-.font-size-300 {
-  font-size: 0.9em;
-}
-
-.header {
+.bg-fixed {
+  height: 100vh;
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  left: 0;
   background-image: url(../assets/galaxy.jpg);
   background-position: center;
   background-size: cover;
 }
 
-.btn-text {
-  color: var(--color-dark-gray);
-  text-align: center;
-}
-
 .search__bar {
+  display: flex;
   border-radius: 0.5rem;
   overflow: hidden;
   height: 2.8em;
@@ -204,8 +218,6 @@ button {
 }
 .search__label {
   font-weight: 500;
-  text-align: center;
-  display: block;
 }
 .search__icon {
   height: 55%;
@@ -217,12 +229,10 @@ button {
 }
 
 .section-profile {
-  margin-top: 28vh;
   min-height: 72vh;
   transform: translateY(75vh);
   animation: slideUp 1s ease-out;
   animation-fill-mode: forwards;
-  padding: 0 2em 2em 2em;
 }
 
 .avatar-box {
@@ -230,14 +240,15 @@ button {
   border-radius: 1rem;
   overflow: hidden;
   border: 0.5rem solid transparent;
-  width: clamp(8rem, 18vw, 10rem);
+  width: clamp(9.5rem, 18vw, 11rem);
 }
-.avatar-box__img {
+.avatar-box img {
   object-fit: cover;
 }
 
 .profile {
   max-width: 70rem;
+  padding: var(--space-500);
 }
 .profile__avatar {
   transform: translateY(0.5rem);
@@ -245,9 +256,6 @@ button {
   flex: auto 0 0;
   min-width: 7rem;
   align-self: flex-end;
-}
-.profile__info-1 {
-  padding-top: 1.4em;
 }
 .profile__stats {
   display: flex;
@@ -288,7 +296,6 @@ button {
 .repository__link:visited, .repository__link:link {
   display: inline-block;
   text-decoration: none;
-  color: var(--color-dark-gray);
 }
 .repository__title {
   color: var(--color-light-gray);
@@ -302,7 +309,7 @@ button {
     transform: translateY(0);
   }
 }
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 850px) {
   .profile__stat {
     display: flex;
     flex-direction: column;
@@ -318,19 +325,16 @@ button {
     padding: 0;
   }
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 700px) {
   .profile {
-    text-align: center;
-  }
-  .profile__info-1 {
-    display: block;
     padding-top: 1em;
   }
-  .profile__info-1 > * + * {
-    margin-top: 1em;
+  .profile > *:not(.repo-grid) {
+    display: block;
+    text-align: center;
   }
   .profile__avatar {
-    margin: -5em auto 0 auto;
+    margin: calc(-3 * var(--space-500)) auto var(--space-300) auto;
     transform: translate(0);
   }
   .profile__stats {
@@ -338,9 +342,6 @@ button {
   }
   .repo-grid {
     grid-template-columns: 1fr;
-  }
-  .repository {
-    text-align: start;
   }
 }
 
