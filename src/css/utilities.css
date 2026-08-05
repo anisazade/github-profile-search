@@ -1,4 +1,4 @@
-// Token utilities
+Token utilities
 .shrink{ 
     height: var(--shrink-size);
 }
@@ -15,7 +15,7 @@
     font-size: clamp(.9rem, 1.5vw, 1.1rem);
 }
 
-// Layout
+/* Layout */
 .flex-centered{
     display: flex;
     align-items: center;

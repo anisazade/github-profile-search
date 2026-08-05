@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import './css/App.css';
-import data from './data.json';
 
 function RepositoryGrid({ repository_list }) {
     const reposJSX = repository_list.map((repo) => {

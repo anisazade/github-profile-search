@@ -135,14 +135,14 @@
     }
 }
 
-// Animations
+/* Animations */
 @keyframes slideUp {
     100% {
         transform: translateY(0);
     }
 }
 
-// Media Queries
+/* Media Queries  */
 @media screen and (max-width: 850px) {
     .profile {
         &__stat {
