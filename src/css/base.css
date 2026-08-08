@@ -8,10 +8,12 @@
     --color-dark-gray: #ccccccd8;
     --color-white: #fff;
     --color-black: #000;
-
+    
+    --space-200: clamp( .3rem, .7vw, .5rem);
     --space-300: clamp( .7rem, 1vw, 1rem);
     --space-400: clamp( 1.2rem, 2vw, 1.5rem);
-    --space-500: clamp( 2rem, 3vw, 3rem);
+    --space-500: clamp( 2rem, 2.5vw, 2.4rem);
+
     --font-size-300: clamp(.8rem, 2.2vw, .95rem);
 }
 
@@ -30,7 +32,6 @@ body {
 
 header{
     height: 100vh;
-    --shrink-size: 30vh;
     transition: height 1s;
 }
 

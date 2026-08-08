@@ -1,7 +1,4 @@
-Token utilities
-.shrink{ 
-    height: var(--shrink-size);
-}
+/*--------- Token utilities ---------*/
 
 .bg-primary{
     background-color: var(--color-primary);
@@ -22,40 +19,55 @@ Token utilities
     justify-content: center;
 }
 
-.flex-gap-small{
-    display: flex;
-    gap: var(--space-300);
-}
-
-.flex-gap-meduim{
-    display: flex;
-    gap: var(--space-400);  
-}
-
-.flex-gap-big{
-    display: flex;
-    gap: var(--space-500);
-}
-
 .flow-centered{
     display: block;
     margin: 0 auto;
 }
 
-.stack-gap-small{
-    > * + *{
+.flex-200{
+    display: flex;
+    gap: var(--space-200);
+}
+
+.flex-300{
+    display: flex;
+    gap: var(--space-300);
+}
+
+.flex-400{
+    display: flex;
+    gap: var(--space-400);
+}
+
+.flex-500{
+    display: flex;
+    gap: var(--space-500);
+}
+
+.stack-200{
+    /* exclude adding margin to stretched links*/
+    & > *:not(.stretched-link) + *:not(.stretched-link){
+        margin-top: var(--space-200);
+    }
+}
+
+.stack-300{
+    /* exclude adding margin to stretched links*/
+    & > *:not(.stretched-link) + *:not(.stretched-link){
         margin-top: var(--space-300);
     }
 }
 
-.stack-gap-meduim{
-    > * + *{
+.stack-400{
+    /* exclude adding margin to stretched links*/
+    & > *:not(.stretched-link) + *:not(.stretched-link){
         margin-top: var(--space-400);
     }
 }
 
-.stack-gap-big{
-    > * + *{
+.stack-500{
+    /* exclude adding margin to stretched links*/
+    & > *:not(.stretched-link) + *:not(.stretched-link){
         margin-top: var(--space-500);
     }
 }
