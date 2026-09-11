@@ -76,7 +76,7 @@ function Profile({ data }) {
         });
 
         return (
-            <section className="section-profile bg-primary">
+            <section className="section-profile bg-primary active">
                 <div className="profile flow-centered stack-500">
                     <UserInformation user={data.user} />
                     <div className="repo-grid">{reposJSX}</div>
@@ -89,11 +89,11 @@ function Profile({ data }) {
     }
 }
 
-function Header({ onSearch, shrink }) {
+function Header({ onSearch, isProfileActive }) {
     const [searchTerm, setSearchTerm] = useState('');
 
     return (
-        <header className={'flex-centered ' + (shrink ? 'header--shrink' : '')}>
+        <header className={'flex-centered ' + (isProfileActive ? 'is-profile-active' : '')}>
             <div className="search-box font-size-300">
                 <form action="#" className="stack-300">
                     <div className="search-bar bg-primary">
@@ -130,7 +130,7 @@ function App() {
     }
     return (
         <div className="bg-fixed">
-            <Header onSearch={handleSearch} shrink={profile ? true : false} />
+            <Header onSearch={handleSearch} isProfileActive={profile ? true : false} />
             <main>
                 <Profile data={profile} />
             </main>

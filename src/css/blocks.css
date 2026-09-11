@@ -9,7 +9,7 @@
     background-size: cover;
 }
 
-.header--shrink{
+header.is-profile-active{
     height: max(20rem, 30vh);
 }
 
@@ -40,8 +40,11 @@
 .section-profile {
     min-height: 70vh;
     transform: translateY(75vh);
-    animation: slideUp 1s ease-out;
-    animation-fill-mode: forwards;
+}
+
+.section-profile.active {
+    transform: translateY(0);
+    transition: slideUp 1s ease-out;
 }
 
 .avatar-box{
@@ -125,13 +128,6 @@
     inset: 0;
     height: 100%;
     width: 100%;
-}
-
-/* --------- Animations ---------*/
-@keyframes slideUp {
-    100% {
-        transform: translateY(0);
-    }
 }
 
 /*--------- Media Queries ---------*/
