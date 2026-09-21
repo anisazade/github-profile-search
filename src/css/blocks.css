@@ -15,6 +15,7 @@ header.is-profile-active{
 
 .search-bar{
     display: flex;
+    flex-direction: row-reverse;
     border-radius: 0.5rem;
     overflow: hidden;
     height: 2.8em;

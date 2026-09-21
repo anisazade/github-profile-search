@@ -95,24 +95,30 @@ function Header({ onSearch, isProfileActive }) {
     return (
         <header className={'flex-centered ' + (isProfileActive ? 'is-profile-active' : '')}>
             <div className="search-box font-size-300">
-                <form action="#" className="stack-300">
+                <form className="stack-300" onSubmit={(event) => {
+                                    event.preventDefault();
+                                    onSearch(searchTerm);
+                                }
+                            }
+                >
                     <div className="search-bar bg-primary">
-                        <button type="button" onClick={() => onSearch(searchTerm, true)}>
-                            <svg className="svg-icon svg-icon--magnifying-glass" viewBox="0 0 511.986 511.986">
-                                <g id="SVGRepo_bgCarrier" stroke-width="0"/>
-                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
-                                <g id="SVGRepo_iconCarrier"> <g> <g> <path d="M209.297,5.229C93.887,5.229,0,99.121,0,214.526C0,329.93,93.887,423.822,209.297,423.822 c115.409,0,209.297-93.892,209.297-209.297C418.593,99.121,324.706,5.229,209.297,5.229z M209.297,402.893 c-103.862,0-188.367-84.5-188.367-188.367c0-103.866,84.505-188.367,188.367-188.367c103.861,0,188.367,84.501,188.367,188.367 C397.664,318.392,313.158,402.893,209.297,402.893z"/> </g> </g> <g> <g> <rect x="431.726" y="348.717" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -179.4635 440.6595)" width="20.927" height="176.488"/> </g> </g> </g>
-                            </svg>
-                        </button>
                         <input
-                            type="text"
+                            type="search"
                             placeholder="Search"
                             id="search-input"
                             value={searchTerm}
                             onChange={function (event) {
                                 setSearchTerm(event.target.value);
                             }}
+                            required
                         />
+                        <button>
+                            <svg className="svg-icon svg-icon--magnifying-glass" viewBox="0 0 511.986 511.986">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                                <g id="SVGRepo_iconCarrier"> <g> <g> <path d="M209.297,5.229C93.887,5.229,0,99.121,0,214.526C0,329.93,93.887,423.822,209.297,423.822 c115.409,0,209.297-93.892,209.297-209.297C418.593,99.121,324.706,5.229,209.297,5.229z M209.297,402.893 c-103.862,0-188.367-84.5-188.367-188.367c0-103.866,84.505-188.367,188.367-188.367c103.861,0,188.367,84.501,188.367,188.367 C397.664,318.392,313.158,402.893,209.297,402.893z"/> </g> </g> <g> <g> <rect x="431.726" y="348.717" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -179.4635 440.6595)" width="20.927" height="176.488"/> </g> </g> </g>
+                            </svg>
+                        </button>
                     </div>
                     <label htmlFor="search-input" className="flex-centered">
                         Search for an exisitng GitHub user
