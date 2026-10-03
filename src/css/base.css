@@ -53,8 +53,21 @@ input, button{
     border: none;
 }
 
+button:focus, input:focus{
+    outline: none;
+    border: 2px solid var(--color-primary-light-2);
+}
+
+button:active{
+    opacity: .5;
+}    
+
 button, a{
     cursor: pointer;
+}
+
+a:focus{
+    outline: 2px solid var(--color-primary-light-2);
 }
 
 a:visited,

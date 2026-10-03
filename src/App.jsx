@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 function Repository({ repository }) {
     return (
@@ -80,9 +80,11 @@ function Profile({ data }) {
                 <div className="profile flow-centered stack-500">
                     <UserInformation user={data.user} />
                     <div className="repo-grid">{reposJSX}</div>
-                    <a className="flex-centered" href={data.user.repos_page} target="_blank">
-                        View all repositories
-                    </a>
+                    <div className="flex-centered">
+                        <a  href={data.user.repos_page} target="_blank">
+                            View all repositories
+                        </a>
+                    </div>
                 </div>
             </section>
         );
@@ -110,7 +112,7 @@ function Header({ onSearch, isProfileActive }) {
                             onChange={function (event) {
                                 setSearchTerm(event.target.value);
                             }}
-                            required
+                            // autocomplete="off"
                         />
                         <button>
                             <svg className="svg-icon svg-icon--magnifying-glass" viewBox="0 0 511.986 511.986">
@@ -131,33 +133,50 @@ function Header({ onSearch, isProfileActive }) {
 
 function App() {
     const [profile, setProfile] = useState(null);
+    const abortController = useRef(null);
     function handleSearch(username) {
-        getProfile(username).then(setProfile);
+        abortController.current && abortController.current.abort();
+        if (username){
+            abortController.current = new AbortController();
+            getProfile(username, abortController.current.signal).then((result)=>{
+                setProfile(result)
+            })
+            .catch(console.error);
+        }
     }
+
     return (
         <div className="bg-fixed">
             <Header onSearch={handleSearch} isProfileActive={profile ? true : false} />
             <main>
-                <Profile data={profile} />
+                <Profile data={profile} isloading/>
             </main>
         </div>
     );
 }
 
 // Util funcitons
-async function getProfile(username) {
+async function getProfile(username, abortSignal) {
     const userAPI = URL.parse(username, 'https://api.github.com/users/');
-    const userJson = await fetch(userAPI, {
+    const response = await fetch(userAPI, {
         headers: {
             Accept: 'application/vnd.github+json',
             'X-GitHub-Api-Version': '2022-11-28',
         },
-    })
-        .then((response) => (response.ok ? response.json() : null))
-        .catch(console.error);
+        signal: abortSignal,
+    }).catch(()=> {throw new Error("Request failed")});
 
-    if (!userJson) return null;
+    if (!response.ok){
+        console.log(response.status);
+        if (response.status == 404){
+            throw new Error("Couldn't find the user");
+        }
+        else{
+            throw new Error("Couldn't fetch the user");
+        }
+    }
 
+    const userJson = await (response.json());
     const reposJson = await fetch(userJson.repos_url + '?per_page=4', {
         headers: {
             Accept: 'application/vnd.github+json',

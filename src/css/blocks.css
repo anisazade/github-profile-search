@@ -22,20 +22,17 @@ header.is-profile-active{
 
     input {
         width: clamp(14rem, 50vw, 30rem);
-        background-color: transparent;
-        border: none;
         padding: 0.7rem 1.2rem;
-    
+        
         &::placeholder {
             color: rgb(175, 175, 175);
         }
     }    
 
     button {
-        background-color: transparent;
-        border: none;
-        padding: 0.3em 1em;
-    }
+        padding: 0.3em 1em;        
+    }   
+    
 }
 
 .section-profile {
@@ -47,6 +44,7 @@ header.is-profile-active{
     transform: translateY(0);
     transition: slideUp 1s ease-out;
 }
+
 
 .avatar-box{
     aspect-ratio: 1/1;
@@ -115,6 +113,10 @@ header.is-profile-active{
         var(--color-primary-light-1) 99.61%
     );
     overflow: hidden;
+
+    &:focus-within{
+        outline: solid var(--color-primary-light-2);
+    }
 }
 
 .svg-icon{
