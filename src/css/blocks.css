@@ -1,16 +1,32 @@
-.bg-fixed {
-    height: 100vh;
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
+main{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative;
+    overflow-y: clip;
+}
+
+main::before{
+    content: "";
     background-image: url(../assets/galaxy.jpg);
     background-position: center;
     background-size: cover;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
 }
 
-header.is-profile-active{
-    height: max(20rem, 30vh);
+search{
+    flex: 20rem 1 0;
+    transform: translateY(calc(50vh - 50%));
+    transition: transform 1s ease-out;
+}
+
+search.is-profile-active{
+    transform: translate(0);
 }
 
 .search-bar{
@@ -19,32 +35,33 @@ header.is-profile-active{
     border-radius: 0.5rem;
     overflow: hidden;
     height: 2.8em;
-
+    
     input {
         width: clamp(14rem, 50vw, 30rem);
         padding: 0.7rem 1.2rem;
+        border-radius: 0.5rem;
         
         &::placeholder {
             color: rgb(175, 175, 175);
         }
     }    
-
+    
     button {
         padding: 0.3em 1em;        
+        border-radius: 0.5rem;
     }   
     
 }
 
-.section-profile {
-    min-height: 70vh;
-    transform: translateY(75vh);
+.profile-section {
+    flex: auto 1 0;
+    transform: translateY(100vh);
 }
 
-.section-profile.active {
+.profile-section.active {
     transform: translateY(0);
-    transition: slideUp 1s ease-out;
+    transition: transform 1s ease-out;
 }
-
 
 .avatar-box{
     aspect-ratio: 1/1;

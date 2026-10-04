@@ -30,11 +30,6 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-header{
-    height: 100vh;
-    transition: height 1s;
-}
-
 h2 {
     font-size: clamp(1.5rem, 3vw, 1.6rem);
 }
@@ -53,7 +48,7 @@ input, button{
     border: none;
 }
 
-button:focus, input:focus{
+button:focus-visible, input:focus-visible{
     outline: none;
     border: 2px solid var(--color-primary-light-2);
 }
@@ -66,7 +61,7 @@ button, a{
     cursor: pointer;
 }
 
-a:focus{
+a:focus-visible{
     outline: 2px solid var(--color-primary-light-2);
 }
 

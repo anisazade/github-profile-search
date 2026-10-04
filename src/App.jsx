@@ -76,7 +76,6 @@ function Profile({ data }) {
         });
 
         return (
-            <section className="section-profile bg-primary active">
                 <div className="profile flow-centered stack-500">
                     <UserInformation user={data.user} />
                     <div className="repo-grid">{reposJSX}</div>
@@ -86,18 +85,15 @@ function Profile({ data }) {
                         </a>
                     </div>
                 </div>
-            </section>
         );
     }
 }
 
-function Header({ onSearch, isProfileActive }) {
+function Search({ onSearch, isProfileActive }) {
     const [searchTerm, setSearchTerm] = useState('');
-
     return (
-        <header className={'flex-centered ' + (isProfileActive ? 'is-profile-active' : '')}>
-            <div className="search-box font-size-300">
-                <form className="stack-300" onSubmit={(event) => {
+        <search className={'flex-centered ' + (isProfileActive ? 'is-profile-active' : '')}>
+                <form className="stack-300 font-size-300" onSubmit={(event) => {
                                     event.preventDefault();
                                     onSearch(searchTerm);
                                 }
@@ -126,8 +122,7 @@ function Header({ onSearch, isProfileActive }) {
                         Search for an exisitng GitHub user
                     </label>
                 </form>
-            </div>
-        </header>
+        </search>
     );
 }
 
@@ -146,12 +141,12 @@ function App() {
     }
 
     return (
-        <div className="bg-fixed">
-            <Header onSearch={handleSearch} isProfileActive={profile ? true : false} />
-            <main>
+        <main>
+            <Search onSearch={handleSearch} isProfileActive={profile ? true : false} />
+            <section className={`profile-section bg-primary ${profile? "active" : ""}`}>
                 <Profile data={profile} isloading/>
-            </main>
-        </div>
+            </section>
+        </main>
     );
 }
 
