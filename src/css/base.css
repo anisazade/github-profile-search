@@ -30,12 +30,17 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+h1{
+    font-size: clamp(1.4rem, 2vw + 1rem, 2.2rem);
+    line-height: 1.6;
+}
+
 h2 {
-    font-size: clamp(1.5rem, 3vw, 1.6rem);
+    font-size: clamp(1.5rem, 2.4vw, 1.6rem);
 }
 
 h3 {
-    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    font-size: clamp(1rem, 2.3vw, 1.3rem);
 }
 
 h1, h2, h3{

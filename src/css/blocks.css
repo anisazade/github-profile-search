@@ -1,4 +1,4 @@
-main{
+main {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -6,11 +6,9 @@ main{
     overflow-y: clip;
 }
 
-main::before{
-    content: "";
-    background-image: url(../assets/galaxy.jpg);
-    background-position: center;
-    background-size: cover;
+main::before {
+    content: '';
+    background: linear-gradient(240deg,#4c1161 0%, #111d42 30%,  #4c1161 100%);
     height: 100vh;
     position: absolute;
     top: 0;
@@ -19,38 +17,66 @@ main::before{
     z-index: -1;
 }
 
-search{
-    flex: 20rem 1 0;
+search {
+    flex: 0 0 17rem;
+    flex-direction: column;
     transform: translateY(calc(50vh - 50%));
     transition: transform 1s ease-out;
+    position: relative;
+
+    form {
+        z-index: 10;
+    }
+
+    .logo-box {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1em;
+        z-index: 1;
+        transition: opacity .6s ease-out;
+        transform: translateY(-50%);
+        h1 {
+            text-align: center;
+        }
+    }
 }
 
-search.is-profile-active{
+
+search.is-profile-active {
     transform: translate(0);
+    .logo-box {
+        opacity: 0;
+    }
 }
 
-.search-bar{
+.search-bar {
     display: flex;
     flex-direction: row-reverse;
     border-radius: 0.5rem;
     overflow: hidden;
     height: 2.8em;
-    
+    background-color: var(--color-primary-dark);
+
     input {
         width: clamp(14rem, 50vw, 30rem);
         padding: 0.7rem 1.2rem;
         border-radius: 0.5rem;
-        
+
         &::placeholder {
             color: rgb(175, 175, 175);
         }
-    }    
-    
+    }
+
     button {
-        padding: 0.3em 1em;        
+        padding: 0.3em 1em;
         border-radius: 0.5rem;
-    }   
-    
+    }
 }
 
 .profile-section {
@@ -67,8 +93,8 @@ search.is-profile-active{
     aspect-ratio: 1/1;
     border-radius: 1rem;
     overflow: hidden;
-    border: 0.5rem solid transparent;
-    width: clamp(9.5rem, 18vw, 11rem);
+    border: 0.5rem solid var(--color-primary);
+    width: clamp(9.5rem, 18vw, 12rem);
 
     img {
         object-fit: cover;
@@ -78,12 +104,11 @@ search.is-profile-active{
 .profile {
     max-width: 70rem;
     padding: var(--space-500);
-
+    
     .avatar-box {
         transform: translateY(0.5rem);
         margin-top: -9rem;
-        flex: auto 0 0;
-        min-width: 7rem;
+        flex: 0 0 auto;
         align-self: flex-end;
     }
 }
@@ -93,7 +118,7 @@ search.is-profile-active{
     gap: 0.5em;
     align-items: flex-start;
 
-    & > div {
+    .profile__stat {
         background-color: var(--color-primary-dark);
         border-radius: 0.8rem;
         padding: 0.4em 0.2em;
@@ -131,12 +156,12 @@ search.is-profile-active{
     );
     overflow: hidden;
 
-    &:focus-within{
+    &:focus-within {
         outline: solid var(--color-primary-light-2);
     }
 }
 
-.svg-icon{
+.svg-icon {
     fill: currentColor;
     display: inline-block;
     height: 1.2em;
@@ -150,12 +175,50 @@ search.is-profile-active{
     width: 100%;
 }
 
+.skeleton{
+    *{
+        border-radius: 1rem;
+    }
+    .stat-box{
+        flex: 1 0 15ch;
+        height: 4rem;
+    }
+    
+    .name-box{
+        height: 2rem;
+        width: 20ch;
+    }
+    
+    .bio-box{
+        height: 2rem;
+        width: 40ch;
+    }
+
+    .repo-box{
+        height: 10rem;
+    }
+}
+
+.shimmer-animation {
+    --bone-base: #343a52;
+    --bone-highlight: #454d69;
+
+    animation: 3s ease-in-out infinite shimmer;
+    background: linear-gradient(
+        90deg,
+        var(--bone-base) 25%,
+        var(--bone-highlight) 50%,
+        var(--bone-base) 75%
+    );
+    background-size: 200% 100%;
+}
+
 /*--------- Media Queries ---------*/
 
 /* 850px on 16px default font size */
 @media screen and (max-width: 53.125rem) { 
     .profile__stats{
-        & > div {
+        .profile__stat {
             display: flex;
             flex-direction: column;
             text-align: center;
@@ -175,11 +238,11 @@ search.is-profile-active{
 }
 
 /* screen 700px on 16px default font size*/
-@media screen and (max-width: 43.75rem)  {
+@media screen and (max-width: 43.75rem) {
     .profile {
         padding-top: 1em;
 
-        & > *:not(.repo-grid) {
+        > *:not(.repo-grid) {
             display: block;
             text-align: center;
         }
@@ -192,5 +255,20 @@ search.is-profile-active{
 
     .profile__stats {
         justify-content: center;
+    }
+
+    .skeleton{
+        .name-box, .bio-box{
+            margin-inline: auto ;
+        }
+    }
+}
+
+@keyframes shimmer {
+    from {
+        background-position: 100% 0;
+    }
+    to {
+        background-position: -100% 0;
     }
 }

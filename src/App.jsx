@@ -1,4 +1,6 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, use, Suspense } from 'react';
+import { timeAgo, fetchProfile } from './utils';
+import ProfileLoadingSkeleton from './skeleton'
 
 function Repository({ repository }) {
     return (
@@ -41,20 +43,20 @@ function UserInformation({ user }) {
     return (
         <>
             <div className="flex-500">
-                <div className="avatar-box bg-primary">
-                    <img src={user.avatar_url} alt="Profile Picture" />
+                <div className='avatar-box shimmer-animation'>
+                    <img key={user.name} src={user.avatar_url} alt="Profile Picture" />
                 </div>
                 <div className="profile__stats font-size-300">
-                    <div>
+                    <div className="profile__stat">
                         <span className="profile__stat-label">Followers</span>
                         <span className="profile__stat-value">{user.followers}</span>
                     </div>
-                    <div>
+                    <div className="profile__stat">
                         <span className="profile__stat-label">Following</span>
                         <span className="profile__stat-value">{user.following}</span>
                     </div>
                     {user.location && (
-                        <div>
+                        <div className="profile__stat">
                             <span className="profile__stat-label">Location</span>
                             <span className="profile__stat-value"> {user.location}</span>
                         </div>
@@ -63,43 +65,55 @@ function UserInformation({ user }) {
             </div>
             <div className="stack-300">
                 <h2>{user.name}</h2>
-                { user.bio && <p>{user.bio}</p>}
+                {user.bio && <p>{user.bio}</p>}
             </div>
         </>
     );
 }
 
-function Profile({ data }) {
-    if (data) {
-        const reposJSX = data.repos.map((repo) => {
-            return <Repository key={repo.title} repository={repo} />;
-        });
+function Profile({ promise }) {
+    const data = use(promise);
+    const reposJSX = data.repos.map((repo) => {
+        return <Repository key={repo.title} repository={repo} />;
+    });
 
-        return (
-                <div className="profile flow-centered stack-500">
-                    <UserInformation user={data.user} />
-                    <div className="repo-grid">{reposJSX}</div>
-                    <div className="flex-centered">
-                        <a  href={data.user.repos_page} target="_blank">
-                            View all repositories
-                        </a>
-                    </div>
-                </div>
-        );
-    }
+    return (
+        <div className="profile flow-centered stack-500">
+            <UserInformation user={data.user} />
+            <div className="repo-grid">{reposJSX}</div>
+            <div className="flex-centered">
+                <a href={data.user.repos_page} target="_blank">
+                    View all repositories
+                </a>
+            </div>
+        </div>
+    );
 }
 
 function Search({ onSearch, isProfileActive }) {
     const [searchTerm, setSearchTerm] = useState('');
     return (
         <search className={'flex-centered ' + (isProfileActive ? 'is-profile-active' : '')}>
-                <form className="stack-300 font-size-300" onSubmit={(event) => {
-                                    event.preventDefault();
-                                    onSearch(searchTerm);
-                                }
-                            }
+            <div>
+                <div className="logo-box">
+                    <svg className="icon" width="98" height="96" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            fill="#7a74ff"
+                            d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"
+                        />
+                    </svg>
+                    <h1>GitHub profile Search</h1>
+                </div>
+                <form
+                    className="stack-300 font-size-300"
+                    onSubmit={(event) => {
+                        event.preventDefault();
+                        searchTerm && onSearch(searchTerm);
+                    }}
                 >
-                    <div className="search-bar bg-primary">
+                    <div className="search-bar">
                         <input
                             type="search"
                             placeholder="Search"
@@ -108,13 +122,41 @@ function Search({ onSearch, isProfileActive }) {
                             onChange={function (event) {
                                 setSearchTerm(event.target.value);
                             }}
-                            // autocomplete="off"
                         />
                         <button>
-                            <svg className="svg-icon svg-icon--magnifying-glass" viewBox="0 0 511.986 511.986">
-                                <g id="SVGRepo_bgCarrier" stroke-width="0"/>
-                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
-                                <g id="SVGRepo_iconCarrier"> <g> <g> <path d="M209.297,5.229C93.887,5.229,0,99.121,0,214.526C0,329.93,93.887,423.822,209.297,423.822 c115.409,0,209.297-93.892,209.297-209.297C418.593,99.121,324.706,5.229,209.297,5.229z M209.297,402.893 c-103.862,0-188.367-84.5-188.367-188.367c0-103.866,84.505-188.367,188.367-188.367c103.861,0,188.367,84.501,188.367,188.367 C397.664,318.392,313.158,402.893,209.297,402.893z"/> </g> </g> <g> <g> <rect x="431.726" y="348.717" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -179.4635 440.6595)" width="20.927" height="176.488"/> </g> </g> </g>
+                            <svg
+                                className="svg-icon svg-icon--magnifying-glass"
+                                viewBox="0 0 511.986 511.986"
+                            >
+                                <g id="SVGRepo_bgCarrier" stroke-width="0" />
+                                <g
+                                    id="SVGRepo_tracerCarrier"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                                <g id="SVGRepo_iconCarrier">
+                                    {' '}
+                                    <g>
+                                        {' '}
+                                        <g>
+                                            {' '}
+                                            <path d="M209.297,5.229C93.887,5.229,0,99.121,0,214.526C0,329.93,93.887,423.822,209.297,423.822 c115.409,0,209.297-93.892,209.297-209.297C418.593,99.121,324.706,5.229,209.297,5.229z M209.297,402.893 c-103.862,0-188.367-84.5-188.367-188.367c0-103.866,84.505-188.367,188.367-188.367c103.861,0,188.367,84.501,188.367,188.367 C397.664,318.392,313.158,402.893,209.297,402.893z" />{' '}
+                                        </g>{' '}
+                                    </g>{' '}
+                                    <g>
+                                        {' '}
+                                        <g>
+                                            {' '}
+                                            <rect
+                                                x="431.726"
+                                                y="348.717"
+                                                transform="matrix(0.7071 -0.7071 0.7071 0.7071 -179.4635 440.6595)"
+                                                width="20.927"
+                                                height="176.488"
+                                            />{' '}
+                                        </g>{' '}
+                                    </g>{' '}
+                                </g>
                             </svg>
                         </button>
                     </div>
@@ -122,114 +164,33 @@ function Search({ onSearch, isProfileActive }) {
                         Search for an exisitng GitHub user
                     </label>
                 </form>
+            </div>
         </search>
     );
 }
 
 function App() {
-    const [profile, setProfile] = useState(null);
-    const abortController = useRef(null);
+    const [profile_promise, setPromise] = useState(null);
+    const abortController = useRef(new AbortController());
+
     function handleSearch(username) {
-        abortController.current && abortController.current.abort();
-        if (username){
-            abortController.current = new AbortController();
-            getProfile(username, abortController.current.signal).then((result)=>{
-                setProfile(result)
-            })
-            .catch(console.error);
-        }
+        abortController.current.abort();
+        abortController.current = new AbortController();
+        setPromise(fetchProfile(username, abortController.current.signal));
     }
 
     return (
         <main>
-            <Search onSearch={handleSearch} isProfileActive={profile ? true : false} />
-            <section className={`profile-section bg-primary ${profile? "active" : ""}`}>
-                <Profile data={profile} isloading/>
+            <Search onSearch={handleSearch} isProfileActive={profile_promise ? true : false} />
+            <section className={`profile-section bg-primary ${profile_promise ? 'active' : ''}`}>
+                {profile_promise && (
+                    <Suspense fallback={<ProfileLoadingSkeleton />}>
+                        <Profile promise={profile_promise} />
+                    </Suspense>
+                )}
             </section>
         </main>
     );
-}
-
-// Util funcitons
-async function getProfile(username, abortSignal) {
-    const userAPI = URL.parse(username, 'https://api.github.com/users/');
-    const response = await fetch(userAPI, {
-        headers: {
-            Accept: 'application/vnd.github+json',
-            'X-GitHub-Api-Version': '2022-11-28',
-        },
-        signal: abortSignal,
-    }).catch(()=> {throw new Error("Request failed")});
-
-    if (!response.ok){
-        console.log(response.status);
-        if (response.status == 404){
-            throw new Error("Couldn't find the user");
-        }
-        else{
-            throw new Error("Couldn't fetch the user");
-        }
-    }
-
-    const userJson = await (response.json());
-    const reposJson = await fetch(userJson.repos_url + '?per_page=4', {
-        headers: {
-            Accept: 'application/vnd.github+json',
-            'X-GitHub-Api-Version': '2022-11-28',
-        },
-    }).then((data) => data.json());
-    const user = {
-        name: userJson.name,
-        username: userJson.login,
-        avatar_url: userJson.avatar_url,
-        bio: userJson.bio,
-        followers: userJson.followers,
-        following: userJson.following,
-        location: userJson.location,
-        repos_page: 'https://github.com/' + userJson.login + '?tab=repositories',
-    };
-    const repos = reposJson.map((repo) => {
-        return {
-            title: repo.name,
-            description: repo.description,
-            forks: repo.forks_count,
-            license: repo.license?.spdx_id,
-            stars: repo.stargazers_count,
-            last_modified: repo.updated_at,
-            url: repo.clone_url,
-        };
-    });
-    return { user, repos };
-}
-
-function timeAgo(dateString) {
-    const date = new Date(dateString);
-    const now = new Date();
-
-    // Get components
-    const yearDiff = now.getFullYear() - date.getFullYear();
-    const monthDiff = now.getMonth() - date.getMonth();
-    const dayDiff = now.getDate() - date.getDate();
-    const hourDiff = now.getHours() - date.getHours();
-
-    // Same year
-    if (yearDiff === 0) {
-        // Same year & same month
-        if (monthDiff === 0) {
-            // Same day
-            if (dayDiff === 0) {
-                // Same hour
-                if (hourDiff === 0) return 'just now';
-
-                return `${hourDiff} hour${Math.abs(hourDiff) > 1 ? 's' : ''} ago`;
-            }
-            return `${dayDiff} day${Math.abs(dayDiff) > 1 ? 's' : ''} ago`;
-        }
-
-        return `${monthDiff} month${Math.abs(monthDiff) > 1 ? 's' : ''} ago`;
-    }
-
-    return `${yearDiff} year${Math.abs(yearDiff) > 1 ? 's' : ''} ago`;
 }
 
 export default App;
