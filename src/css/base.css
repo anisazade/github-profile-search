@@ -8,6 +8,8 @@
     --color-dark-gray: #ccccccd8;
     --color-white: #fff;
     --color-black: #000;
+
+    --color-red: #F87171;
     
     --space-200: clamp( .3rem, .7vw, .5rem);
     --space-300: clamp( .7rem, 1vw, 1rem);

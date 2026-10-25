@@ -1,4 +1,7 @@
+
+// ------------ Data Fetch -------------
 export async function fetchProfile(username, abortSignal) {
+    console.log("fetching");
     const userAPI = URL.parse(username, 'https://api.github.com/users/');
     const response = await fetch(userAPI, {
         headers: {
@@ -6,26 +9,30 @@ export async function fetchProfile(username, abortSignal) {
             'X-GitHub-Api-Version': '2022-11-28',
         },
         signal: abortSignal,
-    }).catch(()=> {throw new Error("Request failed")});
+    }).catch(profileRequestFailure);
 
-    if (!response.ok){
+    if (!response.ok) {
         console.log(response.status);
-        if (response.status == 404){
-            throw new Error("Couldn't find the user");
-        }
-        else{
-            throw new Error("Couldn't fetch the user");
+        if (response.status == 404) {
+            throw new Error(
+                "Couldn't find this profile. Please check the username and try again.",
+            );
+        } else {
+            throw new Error('There was a problem fetching this profile.');
         }
     }
 
-    const userJson = await (response.json());
-    const reposJson = await fetch(userJson.repos_url + '?per_page=4', {
+    const userJson = await response.json().catch(jsonParsingFailure);
+    const reposResponse = await fetch(userJson.repos_url + '?per_page=4', {
         headers: {
             Accept: 'application/vnd.github+json',
             'X-GitHub-Api-Version': '2022-11-28',
         },
         signal: abortSignal,
-    }).then((data) => data.json());
+    }).catch(profileRequestFailure);
+
+    const reposJson = await reposResponse.json().catch(jsonParsingFailure);
+
     const user = {
         name: userJson.name,
         username: userJson.login,
@@ -35,6 +42,7 @@ export async function fetchProfile(username, abortSignal) {
         following: userJson.following,
         location: userJson.location,
         repos_page: 'https://github.com/' + userJson.login + '?tab=repositories',
+        repos_count: userJson.public_repos,
     };
     const repos = reposJson.map((repo) => {
         return {
@@ -50,6 +58,22 @@ export async function fetchProfile(username, abortSignal) {
     return { user, repos };
 }
 
+function jsonParsingFailure() {
+    throw new Error("Couldn't process the profile data.");
+}
+
+function profileRequestFailure(error) {
+    if (error.name === 'AbortError') {
+        return;
+    } else {
+        throw new Error(
+            "Couldn't connect to GitHub. Check your internet connection and try again.",
+        );
+    }
+}
+
+
+// ------------ DATA FORMATING --------------
 export function timeAgo(dateString) {
     const date = new Date(dateString);
     const now = new Date();

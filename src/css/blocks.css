@@ -8,7 +8,7 @@ main {
 
 main::before {
     content: '';
-    background: linear-gradient(240deg,#4c1161 0%, #111d42 30%,  #4c1161 100%);
+    background: linear-gradient(240deg, #4c1161 0%, #111d42 30%, #4c1161 100%);
     height: 100vh;
     position: absolute;
     top: 0;
@@ -18,7 +18,7 @@ main::before {
 }
 
 search {
-    flex: 0 0 17rem;
+    flex: 0 0;
     flex-direction: column;
     transform: translateY(calc(50vh - 50%));
     transition: transform 1s ease-out;
@@ -39,16 +39,21 @@ search {
         align-items: center;
         gap: 1em;
         z-index: 1;
-        transition: opacity .6s ease-out;
-        transform: translateY(-50%);
+        transition: opacity 0.6s ease-out;
+        transform: translateY(-105%);
+        .icon{
+            aspect-ratio: 1/1;
+            height: auto;
+            width: clamp(4rem, 15vw, 6rem);
+        }
         h1 {
             text-align: center;
         }
     }
 }
 
-
 search.is-profile-active {
+    margin-block: 6.5rem;
     transform: translate(0);
     .logo-box {
         opacity: 0;
@@ -89,12 +94,12 @@ search.is-profile-active {
     transition: transform 1s ease-out;
 }
 
-.avatar-box{
+.avatar-box {
     aspect-ratio: 1/1;
     border-radius: 1rem;
     overflow: hidden;
     border: 0.5rem solid var(--color-primary);
-    width: clamp(9.5rem, 18vw, 12rem);
+    width: clamp(8.5rem, 18vw, 12rem);
 
     img {
         object-fit: cover;
@@ -104,7 +109,7 @@ search.is-profile-active {
 .profile {
     max-width: 70rem;
     padding: var(--space-500);
-    
+
     .avatar-box {
         transform: translateY(0.5rem);
         margin-top: -9rem;
@@ -116,7 +121,7 @@ search.is-profile-active {
 .profile__stats {
     display: flex;
     gap: 0.5em;
-    align-items: flex-start;
+    align-items: flex-end;
 
     .profile__stat {
         background-color: var(--color-primary-dark);
@@ -175,26 +180,26 @@ search.is-profile-active {
     width: 100%;
 }
 
-.skeleton{
-    *{
+.skeleton {
+    * {
         border-radius: 1rem;
     }
-    .stat-box{
+    .stat-box {
         flex: 1 0 15ch;
         height: 4rem;
     }
-    
-    .name-box{
+
+    .name-box {
         height: 2rem;
         width: 20ch;
     }
-    
-    .bio-box{
+
+    .bio-box {
         height: 2rem;
         width: 40ch;
     }
 
-    .repo-box{
+    .repo-box {
         height: 10rem;
     }
 }
@@ -213,11 +218,26 @@ search.is-profile-active {
     background-size: 200% 100%;
 }
 
+.error-box{
+    padding: var(--space-500);
+    margin-block-start: 5rem;
+    p{
+        margin-inline: auto;
+        text-align: center;
+        color: var(--color-red);
+        font-size: large;
+        font-weight: 600;
+        padding: 1em 0.5em;
+        border: 3px solid currentColor;
+        max-width: 70ch;
+    }
+}
+
 /*--------- Media Queries ---------*/
 
 /* 850px on 16px default font size */
-@media screen and (max-width: 53.125rem) { 
-    .profile__stats{
+@media screen and (max-width: 53.125rem) {
+    .profile__stats {
         .profile__stat {
             display: flex;
             flex-direction: column;
@@ -226,7 +246,7 @@ search.is-profile-active {
             padding: 0.7em 1.2em;
         }
     }
-    
+
     .profile__stat-label {
         border-right: none;
         padding: 0;
@@ -248,7 +268,7 @@ search.is-profile-active {
         }
 
         .avatar-box {
-            margin: calc(-3 * var(--space-500)) auto var(--space-300) auto;
+            margin: calc(-2.5 * var(--space-500)) auto var(--space-300) auto;
             transform: translate(0);
         }
     }
@@ -257,9 +277,10 @@ search.is-profile-active {
         justify-content: center;
     }
 
-    .skeleton{
-        .name-box, .bio-box{
-            margin-inline: auto ;
+    .skeleton {
+        .name-box,
+        .bio-box {
+            margin-inline: auto;
         }
     }
 }
