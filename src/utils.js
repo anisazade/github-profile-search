@@ -1,7 +1,5 @@
-
 // ------------ Data Fetch -------------
 export async function fetchProfile(username, abortSignal) {
-    console.log("fetching");
     const userAPI = URL.parse(username, 'https://api.github.com/users/');
     const response = await fetch(userAPI, {
         headers: {
@@ -9,30 +7,17 @@ export async function fetchProfile(username, abortSignal) {
             'X-GitHub-Api-Version': '2022-11-28',
         },
         signal: abortSignal,
-    }).catch(profileRequestFailure);
+    }).catch(requestFailure);
 
     if (!response.ok) {
-        console.log(response.status);
         if (response.status == 404) {
-            throw new Error(
-                "Couldn't find this profile. Please check the username and try again.",
-            );
+            throw new Error("Couldn't find this profile. Please check the username and try again.");
         } else {
-            throw new Error('There was a problem fetching this profile.');
+            throw new Error("There was a problem fetching this profile.");
         }
     }
 
     const userJson = await response.json().catch(jsonParsingFailure);
-    const reposResponse = await fetch(userJson.repos_url + '?per_page=4', {
-        headers: {
-            Accept: 'application/vnd.github+json',
-            'X-GitHub-Api-Version': '2022-11-28',
-        },
-        signal: abortSignal,
-    }).catch(profileRequestFailure);
-
-    const reposJson = await reposResponse.json().catch(jsonParsingFailure);
-
     const user = {
         name: userJson.name,
         username: userJson.login,
@@ -43,8 +28,32 @@ export async function fetchProfile(username, abortSignal) {
         location: userJson.location,
         repos_page: 'https://github.com/' + userJson.login + '?tab=repositories',
         repos_count: userJson.public_repos,
+        repos_url: userJson.repos_url,
     };
-    const repos = reposJson.map((repo) => {
+
+    const repos = await fetchRepos(user.repos_url, 1, abortSignal);
+
+    return { user, repos };
+}
+
+export async function fetchRepos(repos_url, pageNumber, abortSignal) {
+    const reposResponse = await fetch(repos_url + `?per_page=4&page=${pageNumber}`, {
+        headers: {
+            Accept: 'application/vnd.github+json',
+            'X-GitHub-Api-Version': '2022-11-28',
+        },
+        signal: abortSignal,
+    }).catch(requestFailure);
+
+    if (!reposResponse.ok) {
+        if (reposResponse.status == 404) {
+            throw new Error("Couldn't find the repositories. Please check the username and try again.");
+        } else {
+            throw new Error("There was a problem fetching the Repositories.");
+        }
+    }
+    const reposJson =  await reposResponse.json().catch(jsonParsingFailure);
+    return  reposJson.map((repo) => {
         return {
             title: repo.name,
             description: repo.description,
@@ -52,26 +61,25 @@ export async function fetchProfile(username, abortSignal) {
             license: repo.license?.spdx_id,
             stars: repo.stargazers_count,
             last_modified: repo.updated_at,
-            url: repo.clone_url,
+            url: repo.html_url,
         };
     });
-    return { user, repos };
+
 }
 
 function jsonParsingFailure() {
     throw new Error("Couldn't process the profile data.");
 }
 
-function profileRequestFailure(error) {
+function requestFailure(error) {
     if (error.name === 'AbortError') {
-        return;
+        throw new Error('The request was aborted due to the new search request');
     } else {
         throw new Error(
             "Couldn't connect to GitHub. Check your internet connection and try again.",
         );
     }
 }
-
 
 // ------------ DATA FORMATING --------------
 export function timeAgo(dateString) {

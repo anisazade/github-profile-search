@@ -1,7 +1,7 @@
 import { useState, useRef, use, Suspense } from 'react';
-import { timeAgo, fetchProfile } from './utils';
+import { timeAgo, fetchProfile, fetchRepos } from './utils';
 import ProfileLoadingSkeleton from './skeleton';
-import ErrorBoundary, {ProfileErrorFallback} from './ErrorBoundry';
+import ErrorBoundary, { ProfileErrorFallback } from './ErrorBoundry';
 
 function Repository({ repository }) {
     return (
@@ -35,7 +35,12 @@ function Repository({ repository }) {
                     <span> Updated {timeAgo(repository.last_modified)}</span>
                 </div>
             </div>
-            <a className="stretched-link" href={repository.url} target="_blank"></a>
+            <a
+                aria-label={`View ${repository.name} repository on GitHub`}
+                className="stretched-link"
+                href={repository.url}
+                target="_blank"
+            ></a>
         </div>
     );
 }
@@ -72,21 +77,47 @@ function UserInformation({ user }) {
     );
 }
 
-function Profile({ promise }) {
+function Profile({ promise , setController}) {
     const data = use(promise);
+    const [additionalRepos, setNewRepos] = useState([]);
+    const [loadingNewRepos, setLoading] = useState(false);
+
     const reposJSX = data.repos.map((repo) => {
         return <Repository key={repo.title} repository={repo} />;
     });
+    const additionalReposJSX = additionalRepos.map((repo) => {
+        return <Repository key={repo.title} repository={repo} />;
+    });
+
+    const fetched_repos_count = data.repos.length + additionalRepos.length;
 
     return (
         <div className="profile flow-centered stack-500">
             <UserInformation user={data.user} />
-            <div className="repo-grid">{reposJSX}</div>
-            <div className="flex-centered">
-                <a href={data.user.repos_page} target="_blank">
-                    View all repositories
-                </a>
+            <div className="repo-grid">
+                {reposJSX}
+                {additionalReposJSX}
             </div>
+            {!loadingNewRepos && fetched_repos_count < data.user.repos_count && (
+                <div className="flex-centered">
+                    <button
+                        onClick={async function () {
+                            setLoading(true);
+                            const abortController = new AbortController();
+                            setController(abortController);
+                            const newRepos = await fetchRepos(
+                                data.user.repos_url,
+                                (fetched_repos_count/4)+1,
+                                abortController.signal,
+                            );
+                            setNewRepos([...additionalRepos, ...newRepos]);
+                            setLoading(false);
+                        }}
+                    >
+                        Show more
+                    </button>
+                </div>
+            )}
         </div>
     );
 }
@@ -97,7 +128,13 @@ function Search({ onSearch, isProfileActive }) {
         <search className={'flex-centered ' + (isProfileActive ? 'is-profile-active' : '')}>
             <div>
                 <div className="logo-box">
-                    <svg viewBox="0 0 98 96" className="icon" width="98" height="96" xmlns="http://www.w3.org/2000/svg">
+                    <svg
+                        viewBox="0 0 98 96"
+                        className="icon"
+                        width="98"
+                        height="96"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
                         <path
                             fillRule="evenodd"
                             clipRule="evenodd"
@@ -162,7 +199,7 @@ function Search({ onSearch, isProfileActive }) {
                         </button>
                     </div>
                     <label htmlFor="search-input" className="flex-centered">
-                        Search for an exisitng GitHub user
+                        Search for an exisiting GitHub user
                     </label>
                 </form>
             </div>
@@ -173,14 +210,18 @@ function Search({ onSearch, isProfileActive }) {
 function App() {
     const [profile_promise, setPromise] = useState(null);
     const [request_id, setID] = useState(0);
-    const abortController = useRef(new AbortController());
-
+    const abortController = useRef({profile: new AbortController(), dynamicRepo: new AbortController});
 
     function handleSearch(username) {
-        setID((count)=> count+1);
-        abortController.current.abort();
-        abortController.current = new AbortController();
+        setID((count) => count + 1);
+        abortController.current.profile.abort();
+        abortController.current.dynamicRepo.abort();
+        abortController.current.profile = new AbortController();
         setPromise(fetchProfile(username, abortController.current.signal));
+    }
+
+    function setDynamicRepoController (controller){
+        abortController.current.dynamicRepo = controller;
     }
 
     return (
@@ -190,7 +231,7 @@ function App() {
                 {profile_promise && (
                     <ErrorBoundary key={request_id} fallback={ProfileErrorFallback}>
                         <Suspense fallback={<ProfileLoadingSkeleton />}>
-                            <Profile promise={profile_promise} />
+                            <Profile promise={profile_promise} setController={setDynamicRepoController}/>
                         </Suspense>
                     </ErrorBoundary>
                 )}
