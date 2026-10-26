@@ -160,6 +160,12 @@ search.is-profile-active {
         var(--color-primary-light-1) 99.61%
     );
     overflow: hidden;
+    transition: border-color .2s;
+    border: 1px solid transparent;
+
+    &:hover{
+        border-color: var(--color-primary-light-2);
+    }
 
     &:focus-within {
         outline: solid var(--color-primary-light-2);
@@ -257,6 +263,14 @@ search.is-profile-active {
     }
 }
 
+.spinner{
+    fill: currentColor;
+    aspect-ratio: 1/1;
+    width: 1.7rem;
+    height: auto;
+    animation: spin 0.8s linear infinite;
+}
+
 /* screen 700px on 16px default font size*/
 @media screen and (max-width: 43.75rem) {
     .profile {
@@ -285,11 +299,25 @@ search.is-profile-active {
     }
 }
 
+
+/* ------- animations ------- */
 @keyframes shimmer {
     from {
         background-position: 100% 0;
     }
     to {
         background-position: -100% 0;
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .spinner {
+        animation-duration: 2s;
     }
 }

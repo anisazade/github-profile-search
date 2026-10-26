@@ -77,7 +77,7 @@ function UserInformation({ user }) {
     );
 }
 
-function Profile({ promise , setController}) {
+function Profile({ promise, setController }) {
     const data = use(promise);
     const [additionalRepos, setNewRepos] = useState([]);
     const [loadingNewRepos, setLoading] = useState(false);
@@ -98,24 +98,82 @@ function Profile({ promise , setController}) {
                 {reposJSX}
                 {additionalReposJSX}
             </div>
-            {!loadingNewRepos && fetched_repos_count < data.user.repos_count && (
+            {fetched_repos_count < data.user.repos_count && (
                 <div className="flex-centered">
-                    <button
-                        onClick={async function () {
-                            setLoading(true);
-                            const abortController = new AbortController();
-                            setController(abortController);
-                            const newRepos = await fetchRepos(
-                                data.user.repos_url,
-                                (fetched_repos_count/4)+1,
-                                abortController.signal,
-                            );
-                            setNewRepos([...additionalRepos, ...newRepos]);
-                            setLoading(false);
-                        }}
-                    >
-                        Show more
-                    </button>
+                    {loadingNewRepos ? (
+                        <svg
+                            className="spinner"
+                            height="800px"
+                            width="800px"
+                            version="1.1"
+                            id="Layer_1"
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                            viewBox="0 0 330 330"
+                            xml:space="preserve"
+                        >
+                            <g id="XMLID_11_">
+                                <path
+                                    id="XMLID_12_"
+                                    d="M165,232.5c-8.284,0-15,6.716-15,15v60c0,8.284,6.716,15,15,15s15-6.716,15-15v-60
+		C180,239.216,173.284,232.5,165,232.5z"
+                                />
+                                <path
+                                    id="XMLID_13_"
+                                    d="M165,7.5c-8.284,0-15,6.716-15,15v30c0,8.284,6.716,15,15,15s15-6.716,15-15v-30
+		C180,14.216,173.284,7.5,165,7.5z"
+                                />
+                                <path
+                                    id="XMLID_14_"
+                                    d="M90,157.5c0-8.284-6.716-15-15-15H15c-8.284,0-15,6.716-15,15s6.716,15,15,15h60
+		C83.284,172.5,90,165.784,90,157.5z"
+                                />
+                                <path
+                                    id="XMLID_15_"
+                                    d="M315,142.5h-60c-8.284,0-15,6.716-15,15s6.716,15,15,15h60c8.284,0,15-6.716,15-15S323.284,142.5,315,142.5
+		z"
+                                />
+                                <path
+                                    id="XMLID_16_"
+                                    d="M90.752,210.533L48.327,252.96c-5.857,5.858-5.857,15.355,0,21.213c2.929,2.929,6.768,4.393,10.607,4.393
+		s7.678-1.464,10.607-4.393l42.426-42.427c5.857-5.858,5.857-15.355-0.001-21.213C106.108,204.675,96.611,204.675,90.752,210.533z"
+                                />
+                                <path
+                                    id="XMLID_17_"
+                                    d="M228.639,108.86c3.839,0,7.678-1.464,10.606-4.394l42.426-42.427c5.858-5.858,5.858-15.355,0-21.213
+		c-5.857-5.857-15.355-5.858-21.213,0l-42.426,42.427c-5.858,5.858-5.858,15.355,0,21.213
+		C220.961,107.396,224.8,108.86,228.639,108.86z"
+                                />
+                                <path
+                                    id="XMLID_18_"
+                                    d="M239.245,210.533c-5.856-5.857-15.355-5.858-21.213-0.001c-5.858,5.858-5.858,15.355,0,21.213
+		l42.426,42.427c2.929,2.929,6.768,4.393,10.607,4.393c3.838,0,7.678-1.465,10.606-4.393c5.858-5.858,5.858-15.355,0-21.213
+		L239.245,210.533z"
+                                />
+                            </g>
+                        </svg>
+                    ) : (
+                        <button
+                            onClick={async function () {
+                                setLoading(true);
+                                const abortController = new AbortController();
+                                setController(abortController);
+                                try {
+                                    const newRepos = await fetchRepos(
+                                        data.user.repos_url,
+                                        fetched_repos_count / 4 + 1,
+                                        abortController.signal,
+                                    );
+                                    setNewRepos([...additionalRepos, ...newRepos]);
+                                } catch (error) {
+                                    alert(error.message);
+                                }
+                                setLoading(false);
+                            }}
+                        >
+                            Show more
+                        </button>
+                    )}
                 </div>
             )}
         </div>
@@ -210,7 +268,10 @@ function Search({ onSearch, isProfileActive }) {
 function App() {
     const [profile_promise, setPromise] = useState(null);
     const [request_id, setID] = useState(0);
-    const abortController = useRef({profile: new AbortController(), dynamicRepo: new AbortController});
+    const abortController = useRef({
+        profile: new AbortController(),
+        dynamicRepo: new AbortController(),
+    });
 
     function handleSearch(username) {
         setID((count) => count + 1);
@@ -220,7 +281,7 @@ function App() {
         setPromise(fetchProfile(username, abortController.current.signal));
     }
 
-    function setDynamicRepoController (controller){
+    function setDynamicRepoController(controller) {
         abortController.current.dynamicRepo = controller;
     }
 
@@ -231,7 +292,10 @@ function App() {
                 {profile_promise && (
                     <ErrorBoundary key={request_id} fallback={ProfileErrorFallback}>
                         <Suspense fallback={<ProfileLoadingSkeleton />}>
-                            <Profile promise={profile_promise} setController={setDynamicRepoController}/>
+                            <Profile
+                                promise={profile_promise}
+                                setController={setDynamicRepoController}
+                            />
                         </Suspense>
                     </ErrorBoundary>
                 )}
