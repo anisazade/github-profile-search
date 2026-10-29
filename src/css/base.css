@@ -9,7 +9,10 @@
     --color-white: #fff;
     --color-black: #000;
 
-    --color-red: #F87171;
+    /* error colors */
+    --color-red-text: #F87171;
+    --color-red-border: #7f1d1d;
+    --color-red-background: #321d28;
     
     --space-200: clamp( .3rem, .7vw, .5rem);
     --space-300: clamp( .7rem, 1vw, 1rem);

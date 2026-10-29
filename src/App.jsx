@@ -77,10 +77,11 @@ function UserInformation({ user }) {
     );
 }
 
-function Profile({ promise, setController }) {
+function Profile({ promise, abortSignal, setPopupError, removeError }) {
     const data = use(promise);
     const [additionalRepos, setNewRepos] = useState([]);
-    const [loadingNewRepos, setLoading] = useState(false);
+    const [isLoadingNewRepos, setLoading] = useState(false);
+    const popupErrorTimeout = useRef(0);
 
     const reposJSX = data.repos.map((repo) => {
         return <Repository key={repo.title} repository={repo} />;
@@ -100,7 +101,7 @@ function Profile({ promise, setController }) {
             </div>
             {fetched_repos_count < data.user.repos_count && (
                 <div className="flex-centered">
-                    {loadingNewRepos ? (
+                    {isLoadingNewRepos ? (
                         <svg
                             className="spinner"
                             height="800px"
@@ -156,17 +157,20 @@ function Profile({ promise, setController }) {
                         <button
                             onClick={async function () {
                                 setLoading(true);
-                                const abortController = new AbortController();
-                                setController(abortController);
                                 try {
                                     const newRepos = await fetchRepos(
                                         data.user.repos_url,
                                         fetched_repos_count / 4 + 1,
-                                        abortController.signal,
+                                        abortSignal,
                                     );
                                     setNewRepos([...additionalRepos, ...newRepos]);
                                 } catch (error) {
-                                    alert(error.message);
+                                    setPopupError(error);
+                                    clearTimeout(popupErrorTimeout.current);
+                                    popupErrorTimeout.current = setTimeout(
+                                        () => removeError(),
+                                        4000,
+                                    );
                                 }
                                 setLoading(false);
                             }}
@@ -268,25 +272,27 @@ function Search({ onSearch, isProfileActive }) {
 function App() {
     const [profile_promise, setPromise] = useState(null);
     const [request_id, setID] = useState(0);
-    const abortController = useRef({
-        profile: new AbortController(),
-        dynamicRepo: new AbortController(),
-    });
+    const [popupError, setError] = useState(null);
+    const abortController = useRef(new AbortController());
 
     function handleSearch(username) {
         setID((count) => count + 1);
-        abortController.current.profile.abort();
-        abortController.current.dynamicRepo.abort();
-        abortController.current.profile = new AbortController();
+        abortController.current.abort();
+        abortController.current = new AbortController();
         setPromise(fetchProfile(username, abortController.current.signal));
     }
 
-    function setDynamicRepoController(controller) {
-        abortController.current.dynamicRepo = controller;
+    function setPopupError(error) {
+        setError(error);
+    }
+
+    function removeError() {
+        setError(null);
     }
 
     return (
         <main>
+            <p className={`popup-error ${!popupError ? "isHidden" :""}`} role='alert' >{popupError ? popupError.message : ""}</p>
             <Search onSearch={handleSearch} isProfileActive={!!profile_promise} />
             <section className={`profile-section bg-primary ${profile_promise ? 'active' : ''}`}>
                 {profile_promise && (
@@ -294,7 +300,9 @@ function App() {
                         <Suspense fallback={<ProfileLoadingSkeleton />}>
                             <Profile
                                 promise={profile_promise}
-                                setController={setDynamicRepoController}
+                                abortSignal={abortController.current.signal}
+                                setPopupError={setPopupError}
+                                removeError={removeError}
                             />
                         </Suspense>
                     </ErrorBoundary>

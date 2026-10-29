@@ -10,10 +10,14 @@ export async function fetchProfile(username, abortSignal) {
     }).catch(requestFailure);
 
     if (!response.ok) {
-        if (response.status == 404) {
-            throw new Error("Couldn't find this profile. Please check the username and try again.");
+        if (response.status === 404) {
+            throw new Error(
+                'No GitHub user matches this username. Please check the spelling and try again.',
+            );
+        } else if (response.status === 403) {
+            throw new Error('GitHub API limit reached, try again later.');
         } else {
-            throw new Error("There was a problem fetching this profile.");
+            throw new Error('There was a problem fetching this profile.');
         }
     }
 
@@ -47,13 +51,15 @@ export async function fetchRepos(repos_url, pageNumber, abortSignal) {
 
     if (!reposResponse.ok) {
         if (reposResponse.status == 404) {
-            throw new Error("Couldn't find the repositories. Please check the username and try again.");
+            throw new Error("We couldn't find a GitHub user with this username. Please check the spelling and try again. ");
+        } else if (reposResponse.status === 403) {
+            throw new Error('GitHub API limit reached, try again later.');
         } else {
-            throw new Error("There was a problem fetching the Repositories.");
+            throw new Error('There was a problem fetching the Repositories.');
         }
     }
-    const reposJson =  await reposResponse.json().catch(jsonParsingFailure);
-    return  reposJson.map((repo) => {
+    const reposJson = await reposResponse.json().catch(jsonParsingFailure);
+    return reposJson.map((repo) => {
         return {
             title: repo.name,
             description: repo.description,
@@ -64,7 +70,6 @@ export async function fetchRepos(repos_url, pageNumber, abortSignal) {
             url: repo.html_url,
         };
     });
-
 }
 
 function jsonParsingFailure() {
@@ -73,7 +78,7 @@ function jsonParsingFailure() {
 
 function requestFailure(error) {
     if (error.name === 'AbortError') {
-        throw new Error('The request was aborted due to the new search request');
+        return new Promise(() => {});
     } else {
         throw new Error(
             "Couldn't connect to GitHub. Check your internet connection and try again.",
