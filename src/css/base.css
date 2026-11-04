@@ -57,12 +57,7 @@ input, button{
     background-color: transparent;
     border: none;
 }
-
-button:focus-visible, input:focus-visible{
-    outline: none;
-    border: 2px solid var(--color-primary-light-2);
-}
-
+    
 button:active{
     opacity: .5;
 }    
