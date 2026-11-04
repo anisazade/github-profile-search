@@ -17,7 +17,7 @@
     --space-200: clamp( .3rem, .7vw, .5rem);
     --space-300: clamp( .7rem, 1vw, 1rem);
     --space-400: clamp( 1.2rem, 2vw, 1.5rem);
-    --space-500: clamp( 2rem, 2.5vw, 2.4rem);
+    --space-500: clamp( 1.7rem, 2.5vw, 2.4rem);
 
     --font-size-300: clamp(.8rem, 2.2vw, .95rem);
 }
@@ -66,12 +66,9 @@ button, a{
     cursor: pointer;
 }
 
-a:focus-visible{
-    outline: 2px solid var(--color-primary-light-2);
-}
-
 a:visited,
 a:link {
+    outline-offset: 5px;
     color: var(--color-dark-gray);
     text-decoration: none;
 }
