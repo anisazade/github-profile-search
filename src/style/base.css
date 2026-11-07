@@ -1,0 +1,89 @@
+:root {
+    --color-primary: #282d42;
+    --color-primary-dark: #111729; /* primary-dark */
+    --color-primary-light-1: #1d1b48; /* primary-light-1 */
+    --color-primary-light-2: #7a74ff; /*primary-light-2 */
+
+    /* Neutral colors */
+    --color-light-gray: #dbdbdb;
+    --color-dark-gray: #ccccccd8;
+    --color-white: #fff;
+    --color-black: #000;
+
+    /* error colors */
+    --color-red-text: #f87171;
+    --color-red-border: #7f1d1d;
+    --color-red-background: #321d28;
+
+    --space-200: clamp(0.3rem, 0.21rem + 0.39vw, 0.5rem);
+    --space-300: clamp(0.7rem, 0.56rem + 0.58vw, 1rem);
+    --space-400: clamp(1.2rem, 1.06rem + 0.58vw, 1.5rem);
+    --space-500: clamp(1.7rem, 1.38rem + 1.36vw, 2.4rem);
+
+    /* Typography */
+    --font-size-200: clamp(0.79rem, 0.75rem + 0.17vw, 0.88rem);
+    --font-size-300: clamp(0.8rem, 0.72rem + 0.35vw, 0.98rem);
+    --font-size-500: clamp(1rem, 0.89rem + 0.48vw, 1.25rem);
+    --font-size-600: clamp(1.25rem, 1.14rem + 0.48vw, 1.5rem);
+    --font-size-700: clamp(1.5rem, 1.18rem + 1.36vw, 2.2rem);
+}
+
+body {
+    font-family: "Be Vietnam Pro", "Be Vietnam Pro Fallback", Arial, sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--color-light-gray);
+    font-size: 1rem;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+    font-size: var(--font-size-700);
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+h2 {
+    font-size: var(--font-size-600);
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+h3 {
+    font-size: var(--font-size-500);
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+h1,
+h2,
+h3 {
+    text-wrap: none;
+}
+
+input,
+button {
+    color: inherit;
+    background-color: transparent;
+    border: none;
+}
+
+button:active {
+    opacity: 0.5;
+}
+
+button,
+a {
+    cursor: pointer;
+}
+
+a:visited,
+a:link {
+    outline-offset: 5px;
+    color: inherit;
+    text-decoration: none;
+}

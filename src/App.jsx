@@ -366,7 +366,7 @@ function App() {
         setError(null);
     }
 
-    return (
+    return (  
         <main>
             <p className={`popup-error ${!popupError ? "isHidden" : ""}`} role="alert">
                 {popupError ? popupError.message : ""}

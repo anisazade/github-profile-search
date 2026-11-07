@@ -5,11 +5,11 @@
 }
 
 .font-size-200{
-    font-size: clamp(.79rem, 1.3vw, .87rem);
+    font-size: var(--font-size-200);
 }
 
 .font-size-300{
-    font-size: clamp(.9rem, 1.5vw, 1.1rem);
+    font-size: var(--font-size-300);
 }
 
 /* Layout */

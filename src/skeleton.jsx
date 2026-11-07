@@ -13,7 +13,7 @@ function UserInfoSkeleton() {
         <>
             <div className="flex-500" aria-hidden="true">
                 <div className="avatar-box shimmer-animation"></div>
-                <div className="flex-400 profile__stats font-size-300">
+                <div className="flex-200 profile__stats font-size-300">
                     <div className="shimmer-animation stat-box" />
                     <div className="shimmer-animation stat-box" />
                     <div className="shimmer-animation stat-box" />

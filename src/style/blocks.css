@@ -37,14 +37,14 @@ search {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 1em;
+        gap: 1.5em;
         z-index: 1;
         transition: opacity 0.6s ease-out;
-        transform: translateY(-105%);
+        transform: translateY(-118%);
         .icon {
             aspect-ratio: 1/1;
             height: auto;
-            width: clamp(4rem, 15vw, 6rem);
+            width: clamp(5rem, 4.55rem + 1.94vw, 6rem);
         }
         h1 {
             text-align: center;
@@ -69,7 +69,7 @@ search.is-profile-active {
     background-color: var(--color-primary-dark);
 
     input {
-        width: clamp(14rem, 50vw, 30rem);
+        width: clamp(17rem, 50vw, 30rem);
         padding: 0.7em 0.7em;
         border-radius: 0.5rem;
         &::placeholder {
@@ -109,7 +109,7 @@ search.is-profile-active {
     border-radius: 1rem;
     overflow: hidden;
     border: 0.5rem solid var(--color-primary);
-    width: clamp(8.5rem, 18vw, 12rem);
+    width: clamp(8.5rem, 6.9rem + 6.8vw, 12rem);
 
     img {
         object-fit: cover;
@@ -155,7 +155,7 @@ search.is-profile-active {
 
 .repo-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(25rem,85vw), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(25rem, 85vw), 1fr));
     gap: var(--space-400);
     align-items: start;
     list-style: none;
@@ -173,7 +173,8 @@ search.is-profile-active {
     transition: border-color 0.2s;
     border: 1px solid transparent;
 
-    .repository__stats{
+    .repository__stats,
+    p {
         color: var(--color-dark-gray);
     }
 
@@ -185,21 +186,22 @@ search.is-profile-active {
 .svg-icon {
     fill: currentColor;
     display: inline-block;
-    height: 1.2em;
-    width: 1.2em;
+    height: 1.3em;
+    width: 1.3em;
 }
 
 .link {
-    .link-icon{
-        height: .8em;
+    .link-icon {
+        height: 0.8em;
         width: auto;
         opacity: 0;
+        margin-inline-start: 3px;
     }
-    &:hover, &:focus-visible{
-        color: var(--color-primary-light-2);
+
+    &:hover,
+    &:focus-visible {
         text-decoration: underline;
-        .link-icon{
-            margin-inline-start: 2px;
+        .link-icon {
             opacity: 1;
         }
     }
@@ -210,7 +212,7 @@ search.is-profile-active {
         border-radius: 1rem;
     }
     .stat-box {
-        flex: 0 0 20ch;
+        flex: 0 0 17ch;
         height: 3em;
         font-size: var(--font-300);
     }
@@ -301,7 +303,7 @@ search.is-profile-active {
 
 /*--------- Media Queries ---------*/
 
-/* 850px on 16px default font size */
+/* screen 850px on 16px default font size */
 @media screen and (max-width: 53.125rem) {
     .profile__stats {
         .profile__stat {
@@ -323,7 +325,7 @@ search.is-profile-active {
     }
 
     .skeleton .stat-box {
-        flex: 0 0 13ch;
+        flex: 0 0 15ch;
         height: 4.5em;
     }
 }
@@ -344,20 +346,30 @@ search.is-profile-active {
         }
     }
 
-    .repository{
-        .repository__stats{
+    .repository {
+        .repository__stats {
             flex-wrap: wrap;
         }
     }
 
     .profile__stats {
         justify-content: center;
+        flex-wrap: wrap;
     }
 
     .skeleton {
         .name-box,
         .bio-box {
             margin-inline: auto;
+        }
+        .bio-box{
+            width: auto;
+        }
+        .name-box{
+            width: 50%;
+        }
+        .stat-box {
+            flex: 1 0 auto;
         }
     }
 }
