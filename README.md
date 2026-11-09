@@ -9,8 +9,6 @@ A responsive web application to search for GitHub profiles and explore their det
 - **Live Demo:** [https://github-profile-search-dfl.pages.dev/](https://github-profile-search-dfl.pages.dev/)
 - **Challenge Prompt:** [DevChallenges.io](https://devchallenges.io/challenge/github-profile)
 
----
-
 ## Features
 
 - **Profile Search:** Look up any GitHub user by username.
@@ -19,8 +17,6 @@ A responsive web application to search for GitHub profiles and explore their det
 - **Accessibility:** Uses semantic HTML, keyboard-navigable controls, `aria-labels` for SVG icons, and `aria-live` regions for status updates.
 - **Layout Stability:** Fallback font metrics and skeleton loaders are sized to prevent layout shifts while data and fonts load.
 - **Responsive:** Adapts cleanly across mobile, tablet, and desktop screens.
-
----
 
 ## Technologies Used
 
