@@ -1,22 +1,30 @@
 # GitHub Profile Search App
 
-A GitHub Profile Search application that allows users to search for GitHub profiles and display relevant information. The app utilizes multiple API endpoints, primarily the GitHub REST API, which returns data about users, repositories, and other related information in JSON format.
+<p align="center">
+  <img width="800" height="450" alt="GitHub Profile Search App Preview" src="https://github.com/user-attachments/assets/a67a9c57-2323-47e0-aa1c-37bb2f4c2678" />
+</p>
 
-> This project is based on a challenge from [DevChallenges.io](https://devchallenges.io/challenge/github-profile). I picked this to practice frontend development and learn API integration.
+A responsive web application to search for GitHub profiles and explore their details and repositories using the GitHub REST API.
+
+- **Live Demo:** [https://github-profile-search-dfl.pages.dev/](https://github-profile-search-dfl.pages.dev/)
+- **Challenge Prompt:** [DevChallenges.io](https://devchallenges.io/challenge/github-profile)
+
+---
 
 ## Features
 
-- Search for GitHub profiles by username.
-- Fetch and display a user's GitHub profile and repository information dynamically.
-- Provide links to view each repository and the user's full repository list on GitHub.
-- Responsive design that adapts to a wide range of screen sizes without distorting the layout.
+- **Profile Search:** Look up any GitHub user by username.
+- **Dynamic Repository Loading:** Fetches and displays user repositories dynamically with direct links to view them on GitHub.
+- **State Handling:** Dedicated loading indicators and error messages for invalid usernames, rate limits, or network failures.
+- **Accessibility:** Uses semantic HTML, keyboard-navigable controls, `aria-labels` for SVG icons, and `aria-live` regions for status updates.
+- **Layout Stability:** Fallback font metrics and skeleton loaders are sized to prevent layout shifts while data and fonts load.
+- **Responsive:** Adapts cleanly across mobile, tablet, and desktop screens.
 
-## Technologies
+---
 
-- **React** — Used to build the application's components and implement interactive user interfaces.
-- **Vite** — Used as the development server and build tool for the React application.
-- **Vanilla CSS** — Used for styling the application without a CSS framework or preprocessor.
+## Technologies Used
 
-## Design Architecture
-
-I tried to follow the CUBE CSS methodology in this project since it makes the styling more modular, simpler, and easier to maintain. I also used BEM naming conventions for some of the block classes.
+- **React** — UI components and state management.
+- **Vite** — Build tool and local development server.
+- **Vanilla CSS** — Structured using CUBE CSS principles and BEM naming conventions.
+- **GitHub REST API** — Data source for profiles and repositories.
