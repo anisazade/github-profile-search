@@ -4,7 +4,6 @@ main {
     min-height: 100vh;
     position: relative;
     overflow-y: clip;
-    background: linear-gradient(240deg, #4c1161 0%, #111d42 30%, #4c1161 100%);
 }
 
 search {
